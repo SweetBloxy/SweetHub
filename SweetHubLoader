@@ -1,0 +1,345 @@
+--// 💫 • Sweet Hub
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+--==================================================
+-- SETTINGS
+--==================================================
+
+local BackgroundImage =
+    "rbxthumb://type=Asset&id=84560327083102&w=420&h=420"
+
+local Scripts = {
+    {
+        Name = "⭐ • Mm2",
+        Description = "Murder Mystery 2",
+        Accent = Color3.fromRGB(255, 215, 80)
+    },
+
+    {
+        Name = "☁️ • Wallhop",
+        Description = "WallHop V4",
+        Accent = Color3.fromRGB(180, 220, 255)
+    }
+}
+
+--==================================================
+-- REMOVE OLD
+--==================================================
+
+local Old = PlayerGui:FindFirstChild("SweetHub")
+
+if Old then
+    Old:Destroy()
+end
+
+--==================================================
+-- GUI
+--==================================================
+
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "SweetHub"
+Gui.ResetOnSpawn = false
+Gui.IgnoreGuiInset = true
+Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Gui.Parent = PlayerGui
+
+--==================================================
+-- MAIN
+--==================================================
+
+local Main = Instance.new("Frame")
+Main.Size = UDim2.fromOffset(455, 330)
+Main.Position = UDim2.new(0.5, -227, 0.5, -165)
+Main.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
+Main.BackgroundTransparency = 0.18
+Main.BorderSizePixel = 0
+Main.ClipsDescendants = true
+Main.Parent = Gui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 20)
+MainCorner.Parent = Main
+
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Thickness = 1.5
+MainStroke.Transparency = 0.25
+MainStroke.Color = Color3.fromRGB(255, 255, 255)
+MainStroke.Parent = Main
+
+--==================================================
+-- BACKGROUND
+--==================================================
+
+local Background = Instance.new("ImageLabel")
+Background.Size = UDim2.fromScale(1, 1)
+Background.BackgroundTransparency = 1
+Background.Image = BackgroundImage
+Background.ScaleType = Enum.ScaleType.Crop
+Background.ImageTransparency = 0
+Background.ZIndex = 1
+Background.Parent = Main
+
+local BGCorner = Instance.new("UICorner")
+BGCorner.CornerRadius = UDim.new(0, 20)
+BGCorner.Parent = Background
+
+-- Glass
+local Glass = Instance.new("Frame")
+Glass.Size = UDim2.fromScale(1, 1)
+Glass.BackgroundColor3 = Color3.fromRGB(10, 10, 14)
+Glass.BackgroundTransparency = 0.68
+Glass.BorderSizePixel = 0
+Glass.ZIndex = 2
+Glass.Parent = Main
+
+local GlassCorner = Instance.new("UICorner")
+GlassCorner.CornerRadius = UDim.new(0, 20)
+GlassCorner.Parent = Glass
+
+--==================================================
+-- HEADER
+--==================================================
+
+local Header = Instance.new("Frame")
+Header.Size = UDim2.new(1, -30, 0, 65)
+Header.Position = UDim2.fromOffset(15, 10)
+Header.BackgroundTransparency = 1
+Header.ZIndex = 5
+Header.Parent = Main
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, -50, 0, 32)
+Title.BackgroundTransparency = 1
+Title.Text = "💫 • Sweet Hub"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 25
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Header
+
+local Subtitle = Instance.new("TextLabel")
+Subtitle.Size = UDim2.new(1, -50, 0, 22)
+Subtitle.Position = UDim2.fromOffset(2, 34)
+Subtitle.BackgroundTransparency = 1
+Subtitle.Text = "Select a script"
+Subtitle.TextColor3 = Color3.fromRGB(190, 190, 198)
+Subtitle.TextSize = 12
+Subtitle.Font = Enum.Font.GothamMedium
+Subtitle.TextXAlignment = Enum.TextXAlignment.Left
+Subtitle.Parent = Header
+
+--==================================================
+-- LIST
+--==================================================
+
+local List = Instance.new("ScrollingFrame")
+List.Size = UDim2.new(1, -30, 1, -90)
+List.Position = UDim2.fromOffset(15, 80)
+List.BackgroundTransparency = 1
+List.BorderSizePixel = 0
+List.ScrollBarThickness = 2
+List.CanvasSize = UDim2.new()
+List.AutomaticCanvasSize = Enum.AutomaticSize.Y
+List.ZIndex = 5
+List.Parent = Main
+
+local Layout = Instance.new("UIListLayout")
+Layout.Padding = UDim.new(0, 12)
+Layout.SortOrder = Enum.SortOrder.LayoutOrder
+Layout.Parent = List
+
+--==================================================
+-- EXECUTE
+--==================================================
+
+local function ExecuteScript(Data)
+
+    -- Destroy UI FIRST
+    if Gui and Gui.Parent then
+        Gui:Destroy()
+    end
+
+    task.wait()
+
+    if Data.Name == "⭐ • Mm2" then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SweetBloxy/SweeTBloxY-Hub-mm2/refs/heads/main/SweetHubmm2"))()
+        print("MM2 selected")
+
+    elseif Data.Name == "☁️ • Wallhop" then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SweetBloxy/SweeTBloxY-Hub-mm2/refs/heads/main/SweetHubWallhop"))()
+        print("WallHop selected")
+
+    end
+end
+
+--==================================================
+-- CARDS
+--==================================================
+
+for Index, Data in ipairs(Scripts) do
+
+    local Card = Instance.new("TextButton")
+
+    Card.Size = UDim2.new(1, -4, 0, 82)
+    Card.BackgroundColor3 = Color3.fromRGB(18, 18, 23)
+    Card.BackgroundTransparency = 0.38
+    Card.BorderSizePixel = 0
+    Card.Text = ""
+    Card.AutoButtonColor = false
+    Card.LayoutOrder = Index
+    Card.ZIndex = 6
+    Card.Parent = List
+
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(0, 14)
+    Corner.Parent = Card
+
+    local Stroke = Instance.new("UIStroke")
+    Stroke.Thickness = 1
+    Stroke.Transparency = 0.45
+    Stroke.Color = Data.Accent
+    Stroke.Parent = Card
+
+    -- Accent
+    local Accent = Instance.new("Frame")
+    Accent.Size = UDim2.fromOffset(4, 48)
+    Accent.Position = UDim2.fromOffset(10, 17)
+    Accent.BackgroundColor3 = Data.Accent
+    Accent.BorderSizePixel = 0
+    Accent.ZIndex = 7
+    Accent.Parent = Card
+
+    local AccentCorner = Instance.new("UICorner")
+    AccentCorner.CornerRadius = UDim.new(1, 0)
+    AccentCorner.Parent = Accent
+
+    -- Name
+    local Name = Instance.new("TextLabel")
+    Name.Size = UDim2.new(1, -155, 0, 30)
+    Name.Position = UDim2.fromOffset(27, 13)
+    Name.BackgroundTransparency = 1
+    Name.Text = Data.Name
+    Name.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Name.TextSize = 18
+    Name.Font = Enum.Font.GothamBold
+    Name.TextXAlignment = Enum.TextXAlignment.Left
+    Name.ZIndex = 7
+    Name.Parent = Card
+
+    -- Description
+    local Description = Instance.new("TextLabel")
+    Description.Size = UDim2.new(1, -155, 0, 22)
+    Description.Position = UDim2.fromOffset(28, 42)
+    Description.BackgroundTransparency = 1
+    Description.Text = Data.Description
+    Description.TextColor3 = Color3.fromRGB(175, 175, 185)
+    Description.TextSize = 11
+    Description.Font = Enum.Font.GothamMedium
+    Description.TextXAlignment = Enum.TextXAlignment.Left
+    Description.ZIndex = 7
+    Description.Parent = Card
+
+    -- Arrow
+    local Arrow = Instance.new("TextLabel")
+    Arrow.Size = UDim2.fromOffset(55, 60)
+    Arrow.Position = UDim2.new(1, -65, 0.5, -30)
+    Arrow.BackgroundTransparency = 1
+    Arrow.Text = "›"
+    Arrow.TextColor3 = Data.Accent
+    Arrow.TextSize = 35
+    Arrow.Font = Enum.Font.GothamBold
+    Arrow.ZIndex = 7
+    Arrow.Parent = Card
+
+    -- Hover
+    Card.MouseEnter:Connect(function()
+
+        TweenService:Create(
+            Card,
+            TweenInfo.new(0.18),
+            {BackgroundTransparency = 0.18}
+        ):Play()
+
+        TweenService:Create(
+            Arrow,
+            TweenInfo.new(0.18),
+            {Position = UDim2.new(1, -60, 0.5, -30)}
+        ):Play()
+    end)
+
+    Card.MouseLeave:Connect(function()
+
+        TweenService:Create(
+            Card,
+            TweenInfo.new(0.18),
+            {BackgroundTransparency = 0.38}
+        ):Play()
+
+        TweenService:Create(
+            Arrow,
+            TweenInfo.new(0.18),
+            {Position = UDim2.new(1, -65, 0.5, -30)}
+        ):Play()
+    end)
+
+    -- CLICK
+    Card.MouseButton1Click:Connect(function()
+        ExecuteScript(Data)
+    end)
+end
+
+--==================================================
+-- DRAG
+--==================================================
+
+local Dragging = false
+local DragStart
+local StartPosition
+
+Header.InputBegan:Connect(function(Input)
+
+    if Input.UserInputType == Enum.UserInputType.MouseButton1
+        or Input.UserInputType == Enum.UserInputType.Touch then
+
+        Dragging = true
+        DragStart = Input.Position
+        StartPosition = Main.Position
+    end
+end)
+
+Header.InputEnded:Connect(function(Input)
+
+    if Input.UserInputType == Enum.UserInputType.MouseButton1
+        or Input.UserInputType == Enum.UserInputType.Touch then
+
+        Dragging = false
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(Input)
+
+    if not Dragging then
+        return
+    end
+
+    if Input.UserInputType ~= Enum.UserInputType.MouseMovement
+        and Input.UserInputType ~= Enum.UserInputType.Touch then
+        return
+    end
+
+    local Delta = Input.Position - DragStart
+
+    Main.Position = UDim2.new(
+        StartPosition.X.Scale,
+        StartPosition.X.Offset + Delta.X,
+
+        StartPosition.Y.Scale,
+        StartPosition.Y.Offset + Delta.Y
+    )
+end)
