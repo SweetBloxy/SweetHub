@@ -10,6 +10,7 @@ local PlayerGui = Player:WaitForChild("PlayerGui")
 local BlockedUsers = {
     [8072567027] = true
     [11431175057] = true
+    [11283290369] = true
 }
 
 if BlockedUsers[Player.UserId] then
