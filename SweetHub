@@ -6,18 +6,6 @@ local UserInputService = game:GetService("UserInputService")
 local Player = Players.LocalPlayer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
--- Blocked users
-local BlockedUsers = {
-    [8072567027] = true
-    [11431175057] = true
-    [11283290369] = true
-}
-
-if BlockedUsers[Player.UserId] then
-    warn("💫 • Sweet Hub: Access denied.")
-    return
-end
-
 --==================================================
 -- SETTINGS
 --==================================================
