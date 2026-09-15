@@ -1,5 +1,3 @@
--- This file was generated at discord.gg/syncrypt
-
 local t1 = {}
 local t2 = {}
 local Players = game:GetService("Players")
@@ -397,7 +395,7 @@ local function applyIconAsset(iconObject)
     end
 end
 
-t2.value35.Image = "rbxthumb://type=Asset&id=99317971916804&w=420&h=420"
+t2.value35.Image = "rbxthumb://type=Asset&id=128498744096272&w=420&h=420"
 t2.value35.ImageColor3 = Color3.fromRGB(255, 255, 255)
 t2.value35.Visible = false
 t2.value35.Active = true
