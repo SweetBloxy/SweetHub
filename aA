@@ -1,0 +1,680 @@
+--[[
+    💎 MM2 VALUES
+    All-in-one MM2 value checker
+    Categories:
+    💗 Godlies
+    🟡 Vintages
+    💜 Ancients
+    🌈 Croma
+    ❤️ Legendaries
+    🔵 Rares
+    🟣 Uncommons
+    ⚪ Commons
+
+    Mobile friendly • Search • Scroll • Draggable • Floating toggle
+]]
+
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+local Old = PlayerGui:FindFirstChild("MM2ValueChecker")
+if Old then
+    Old:Destroy()
+end
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "MM2ValueChecker"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = PlayerGui
+
+--==================================================
+-- DATA
+--==================================================
+
+local Godlies = {
+    {"Travelers Gun",5500},{"Evergun",3450},{"Constellation",3150},
+    {"Evergreen",2800},{"Alienbeam",1950},{"Vampire's Gun",1950},
+    {"Turkey",1900},{"Darkshot",1800},{"Darksword",1775},{"Raygun",1750},
+    {"Blossom",1370},{"Sakura",1360},{"Sunrise",1075},{"Bauble",675},
+    {"Snowcannon",675},{"Soul",655},{"Sunset",650},{"Spirit",645},
+    {"Rainbow Gun",420},{"Flora",410},{"Rainbow",410},{"Xenoknife",405},
+    {"Xenoshot",405},{"Bloom",400},{"Heart Wand",340},{"Blizzard",290},
+    {"Snowstorm",290},{"Ocean",285},{"Waves",280},{"Flowerwood Gun",265},
+    {"Flowerwood",260},{"Snow Dagger",175},{"Watergun",175},{"Treat",155},
+    {"Sweet",150},{"Icecream",150},{"Borealis",145},{"Australis",140},
+    {"Bat",120},{"Beachy",105},{"Sands",105},{"Ornament",100},
+    {"Pearlshine",80},{"Candy",80},{"Pearl",75},{"Heartblade",65},
+    {"Phantom",35},{"Red Luger",35},{"Spectre",35},{"Candleflame",33},
+    {"Darkbringer",33},{"Elderwood Blade",33},{"Elderwood Revolver",33},
+    {"Iceblaster",33},{"Makeshift",33},{"Lightbringer",32},{"Sugar",32},
+    {"Green Luger",23},{"Amerilaser",22},{"Laser",22},{"Hallowgun",20},
+    {"Nightblade",20},{"Shark",20},{"Icebeam",18},{"Luger",18},
+    {"Plasmabeam",18},{"Swirly Gun",18},{"Battleaxe II",17},{"Blaster",17},
+    {"Ginger Luger",17},{"Pixel",17},{"Gemstone",15},{"Iceflake",15},
+    {"Old Glory",15},{"Plasmablade",15},{"Slasher",15},
+    {"Vampire's Edge",15},{"Cookiecane",13},{"Deathshard",13},
+    {"Eternalcane",13},{"Gingerblade",13},{"Jinglegun",13},{"Lugercane",13},
+    {"Minty",13},{"Nebula",13},{"Virtual",13},{"Battleaxe",12},
+    {"Gingermint",12},{"Swirly Blade",12},{"Chill",10},{"Clockwork",10},
+    {"Fang",10},{"Frostsaber",10},{"Heat",10},{"Spider",10},{"Tides",10},
+    {"Bioblade",8},{"Eternal III",8},{"Eternal IV",8},{"Hallow's Blade",8},
+    {"Hallow's Edge",8},{"Handsaw",8},{"Boneblade",7},{"Eternal",7},
+    {"Eternal II",7},{"Frostbite",7},{"Ghostblade",7},{"Ice Dragon",7},
+    {"Ice Shard",7},{"Prismatic",7},{"Pumpking",7},{"Saw",7},{"Xmas",7},
+    {"Eggblade",5},{"Flames",5},{"Snowflake",5},{"Winter's Edge",5},
+    {"Peppermint",4},{"Cookieblade",3},{"Blue Seer",3},{"Purple Seer",3},
+    {"Red Seer",3},{"Seer",3},{"Orange Seer",2},{"Yellow Seer",2}
+}
+
+local Vintages = {
+    {"Blood",8},{"Ghost",8},{"Laser",8},{"America",7},{"Prince",6},
+    {"Shadow",6},{"Phaser",5},{"Cowboy",4},{"Golden",4},{"Splitter",3}
+}
+
+local Ancients = {
+    {"Nik's Scythe","Priceless"},{"Gingerscope",16250},{"Traveler's Axe",8100},
+    {"Celestial",2600},{"Vampire's Axe",1600},{"Harvester",250},
+    {"Icepiercer",160},{"Icebreaker",65},{"Batwing",42},
+    {"Elderwood Scythe",38},{"Swirly Axe",38},{"Hallowscythe",30},
+    {"Logchopper",18},{"Icewing",13}
+}
+
+local Cromas = {
+    {"Traveler's Gun",180000},{"Chroma Evergun",66000},{"Chroma Evergreen",45000},
+    {"Chroma Bauble",34000},{"Chroma Constellation",32500},
+    {"Chroma Vampires Gun",29000},{"Chroma Alienbeam",24000},
+    {"Chroma Raygun",14000},{"Chroma Sunrise",11000},
+    {"Chroma Snowcannon",7750},{"Chroma Sunset",7000},{"Chroma Blizzard",4750},
+    {"Chroma Snowstorm",4250},{"Chroma Heart Wand",4250},
+    {"Chroma Watergun",2600},{"Chroma Snow Dagger",2350},
+    {"Chroma Icecream",2300},{"Chroma Ornament",1825},{"Chroma Treat",1775},
+    {"Chroma Sweet",1725},{"Chroma Sands",1625},{"Chroma Beachy",1575},
+    {"Chroma Darkbringer",65},{"Chroma Lightbringer",60},{"Chroma Luger",50},
+    {"Chroma Candleflame",40},{"Chroma Laser",40},
+    {"Chroma Elderwood Blade",37},{"Chroma Deathshard",35},
+    {"Chroma Swirly Gun",35},{"Chroma Cookiecane",32},{"Chroma Fang",32},
+    {"Chroma Gemstone",32},{"Chroma Shark",32},{"Chroma Slasher",32},
+    {"Chroma Heat",28},{"Chroma Seer",28},{"Chroma Gingerblade",27},
+    {"Chroma Tides",27},{"Chroma Saw",23},{"Chroma Boneblade",22}
+}
+
+local Legendaries = {
+    {"Latte (Gun)",140},{"Latte (Knife)",140},{"Spectral (Knife)",50},
+    {"Traveler (Gun)",50},{"Aurora Gun (2021)",45},{"Vampire Gun (2022)",45},
+    {"Beach",35},{"Cotton Candy",35},{"JD",28},{"Arctic Gun",10},
+    {"Cavern (Knife)",7},{"Broken",7},{"Icedriller",5},{"Nightsky",5},
+    {"Ghost (Knife)",5},{"Ginger Gun (2018)",5},{"Bunnies",4},
+    {"Scratch (2016)",4},{"Skulls",4},{"Aurora Knife (2021)",3},
+    {"Spectral (Gun)",3},{"Traveler (Knife)",3},{"Vampire Knife (2022)",3},
+    {"Witched",3},{"Blue Elite",3},{"Green Elite",3},{"Santa's Magic",3},
+    {"Santa's Spirit",3},{"Energized (Gun)",2},{"Frostfade (Knife)",2},
+    {"Scratch (2017)",2},{"Ghost Gun",2},{"Chromatic (Knife)",1},
+    {"Icecracker",1},{"Red Fire",1},{"Cavern (Gun)",1},
+    {"Arctic (Knife)","x4 T1 Legendaries"},{"Chromatic (Gun)","x4 T1 Legendaries"},
+    {"Cursed (Knife)","x4 T1 Legendaries"},{"Emerald","x4 T1 Legendaries"},
+    {"Energized (Knife)","x4 T1 Legendaries"},{"Frozen (Gun)","x4 T1 Legendaries"},
+    {"Nightstar","x4 T1 Legendaries"},{"Overseer (Gun)","x4 T1 Legendaries"},
+    {"Predator (Knife)","x4 T1 Legendaries"},{"Ripper (Knife)","x4 T1 Legendaries"},
+    {"Rupture","x4 T1 Legendaries"},{"Tree (Gun)","x4 T1 Legendaries"},
+    {"Tree (Knife)","x4 T1 Legendaries"},{"Web","x4 T1 Legendaries"},
+    {"Green Fire","x4 T1 Legendaries"},{"Aquarium (Gun)","x3 T1 Legendaries"},
+    {"Cursed (Gun)","x3 T1 Legendaries"},{"Frostfade (Gun)","x3 T1 Legendaries"},
+    {"Frozen Knife (2025)","x3 T1 Legendaries"},{"Midnight","x3 T1 Legendaries"},
+    {"Palms (Gun)","x3 T1 Legendaries"},{"Sparkle","x3 T1 Legendaries"},
+    {"Bubbles","x2 T1 Legendaries"},{"Cupid","x2 T1 Legendaries"},
+    {"Ginger (Knife)","x2 T1 Legendaries"},{"Ripper (Gun)","x2 T1 Legendaries"},
+    {"Aquarium (Knife)","x2 T1 Legendaries"},{"Palms (Knife)","x2 T1 Legendaries"},
+    {"Overseer (Knife)","x4 T1 Rares"},{"Predator (Gun)","x4 T1 Rares"},
+    {"Rune","x4 T1 Rares"},{"Universe","x4 T1 Rares"},{"Viper","x4 T1 Rares"},
+    {"Fade","x4 T1 Rares"},{"Fusion","x4 T1 Rares"},{"Plasmite","x4 T1 Rares"},
+    {"Shiny","x4 T1 Rares"},{"Splash (Knife)","x4 T1 Rares"},
+    {"Elite","x3 T1 Rares"},{"Splash (Gun)","x3 T1 Rares"}
+}
+
+-- All remaining source entries are kept in the Common master list and
+-- automatically routed to Rares / Uncommons / Commons by their value tier.
+local CommonMaster = {
+    {"Default Knife",0},{"Default Gun",0},{"Glitch1",65},{"Glitch2",35},
+    {"Bats (Knife)",240},{"Gifts (Knife)",95},{"Ghoulish",90},{"Pine (Knife)",85},
+    {"Mummified",35},{"Frosted (Knife)",30},{"Snowflakes (Gun)",30},
+    {"Wrapped (Gun)",30},{"Sparkle9",30},{"Snowman (Gun)",25},{"Webbed (Gun)",25},
+    {"CandyCorn (2017)",25},{"Ecto",25},{"Elf (2018)",20},{"Slimy",20},
+    {"Sparkle10",20},{"Sparkle8",20},{"Sparkle7",18},{"RIP",17},
+    {"Coal (Knife)",15},{"Elf (Knife)",15},{"Candy Corn (2019)",12},
+    {"Pumpkin (2019)",12},{"Prism",12},{"Sparkle6",12},{"Combat II",10},
+    {"Phantom",10},{"Zombie",10},{"Sparkle4",10},{"Skool",8},{"Sparkle5",8},
+    {"Tailslide",7},{"Starry",5},{"Alex",4},{"Corl",4},{"Denis",4},{"Euro",4},
+    {"Ollie",4},{"Sidewinder",4},{"Sketchy",4},{"Sub",4},
+    {"Apocalypse (Gun)",3},{"Bats (2020)",3},{"Infected (Gun)",3},{"Ghosty",3},
+    {"Sparkle1",3},{"Sparkle2",3},{"Sparkle3",3},{"Asteroid",2},{"Grind",2},
+    {"Indy",2},{"Slashed",1},{"Bats (Gun)",1},{"Grave (Gun)",1},
+    {"Grave (Knife)",1},{"Haunted (Gun)",1},{"Haunted (Knife)",1},
+    {"Slime (Gun)",1},{"Slime (Knife)",1},
+
+    {"Apocalypse (Knife)","x4 T1 Legendaries"},{"Frosted (Gun)","x4 T1 Legendaries"},
+    {"Infected (Knife)","x4 T1 Legendaries"},{"Webbed (Knife)","x4 T1 Legendaries"},
+    {"2015","x4 T1 Legendaries"},{"Blossom","x4 T1 Legendaries"},
+    {"Bunny","x4 T1 Legendaries"},{"Carrot","x4 T1 Legendaries"},
+    {"Choco","x4 T1 Legendaries"},{"Egg","x4 T1 Legendaries"},
+    {"Elf (Gun)","x4 T1 Legendaries"},{"Goo","x4 T1 Legendaries"},
+    {"Hearts","x4 T1 Legendaries"},{"Ornament","x4 T1 Legendaries"},
+    {"Ornament1","x4 T1 Legendaries"},{"Ornament2 (Gun)","x4 T1 Legendaries"},
+    {"Ornament2 (Knife)","x4 T1 Legendaries"},{"Passion","x4 T1 Legendaries"},
+    {"Patrick","x4 T1 Legendaries"},{"Reptile","x4 T1 Legendaries"},
+    {"Roses","x4 T1 Legendaries"},{"Santa (Gun)","x4 T1 Legendaries"},
+    {"Santa (Knife)","x4 T1 Legendaries"},{"Sweetheart","x4 T1 Legendaries"},
+    {"Tulip","x4 T1 Legendaries"},{"Valentine","x4 T1 Legendaries"},
+    {"Bones (2016)","x4 T1 Legendaries"},{"Brains (2016)","x4 T1 Legendaries"},
+    {"Witch","x4 T1 Legendaries"},{"Gift Bag (Knife)","x3 T1 Legendaries"},
+    {"Hunter","x3 T1 Legendaries"},{"Infected","x3 T1 Legendaries"},
+    {"Neon","x3 T1 Legendaries"},{"TNL","x3 T1 Legendaries"},
+    {"Gifts (Gun)","x2 T1 Legendaries"},{"Ribbons","x2 T1 Legendaries"},
+    {"Snowflakes (Knife)","x2 T1 Legendaries"},{"Pine (Gun)","x3 T1 Rares"},
+    {"RB Knife","x3 T1 Rares"},{"Cane (Gun)","x2 T1 Rares"},
+    {"Etched","x1 T1 Rare"},{"Ornaments (Gun)","x1 T1 Rare"},
+    {"Coal (Knife) [XMAS2021]","x3 T1 Uncommons"},{"Moon","x3 T1 Uncommons"},
+    {"Love (2023)","x3 T1 Uncommons"},{"Scarf","x3 T1 Uncommons"},
+    {"Candied (Knife)","x2 T1 Uncommons"},{"Cracks (Gun)","x2 T1 Uncommons"},
+    {"Darkness (Knife)","x2 T1 Uncommons"},{"Snowman (Gun) [XMAS2022]","x2 T1 Uncommons"},
+    {"Webs","x2 T1 Uncommons"},{"Fragile (Gun)","x2 T1 Uncommons"},
+    {"Fragile (Knife)","x2 T1 Uncommons"},{"Gift Bag (Gun)","x2 T1 Uncommons"},
+    {"Ornaments (Knife)","x2 T1 Uncommons"},{"Stockings","x2 T1 Uncommons"},
+    {"Toy (Knife)","x2 T1 Uncommons"},{"Trees","x2 T1 Uncommons"},
+    {"Aliens","x1 T1 Uncommon"},{"Coal (Gun) [XMAS2018]","x1 T1 Uncommon"},
+    {"Ghosts (2023)","x1 T1 Uncommon"},{"Pumpkin (2023)","x1 T1 Uncommon"},
+    {"Vines (Knife)","x1 T1 Uncommon"},{"Cat","x1 T1 Uncommon"},
+    {"Coal (Gun)","x1 T1 Uncommon"},{"Ribbon","x1 T1 Uncommon"},
+    {"Santa (2023)","x1 T1 Uncommon"},{"Toy (Gun)","x1 T1 Uncommon"},
+    {"Penguin","x1 T1 Uncommon"},{"Reindeer","x1 T1 Uncommon"},
+
+    {"Candied (Gun)","x3 T1 Commons"},{"Candle","x3 T1 Commons"},
+    {"Candy Corn (Gun) [HALLOWS2022]","x3 T1 Commons"},
+    {"Candy Corn (Knife) [HALLOWS2020]","x3 T1 Commons"},{"Cane (Knife)","x3 T1 Commons"},
+    {"Carved (Gun)","x3 T1 Commons"},{"Coal","x3 T1 Commons"},
+    {"Coal (Gun) [XMAS2021]","x3 T1 Commons"},{"Cracks (Knife)","x3 T1 Commons"},
+    {"Darkness (Gun)","x3 T1 Commons"},{"Elf (2017)","x3 T1 Commons"},
+    {"Frozen (Knife)","x3 T1 Commons"},{"Present","x3 T1 Commons"},
+    {"Present (2023)","x3 T1 Commons"},{"Santa","x3 T1 Commons"},
+    {"Santa (2018)","x3 T1 Commons"},{"Snowman (Knife) [XMAS2018]","x3 T1 Commons"},
+    {"Watcher (Gun)","x3 T1 Commons"},{"Wrapped (Knife)","x3 T1 Commons"},
+    {"Stickers (Gun) [SUMMER2023]","x3 T1 Commons"},
+    {"Stickers (Knife) [XMAS2022]","x3 T1 Commons"},{"Wavy (Knife)","x3 T1 Commons"},
+    {"Bats (Gun) [HALLOWS2024]","x3 T1 Commons"},{"Candles","x3 T1 Commons"},
+    {"Candy Corn (Gun) [HALLOWS2025]","x3 T1 Commons"},
+    {"Candy Corn (Knife) [HALLOWS2024]","x3 T1 Commons"},{"Carrots","x3 T1 Commons"},
+    {"Cats","x3 T1 Commons"},{"Chick","x3 T1 Commons"},{"Clownfish (Knife)","x3 T1 Commons"},
+    {"Gifts (2024)","x3 T1 Commons"},{"Haunted (2025)","x3 T1 Commons"},
+    {"Hot Chocolate","x3 T1 Commons"},{"Igloo (Gun)","x3 T1 Commons"},
+    {"UFOs (Knife)","x3 T1 Commons"},{"Wavy (Gun)","x3 T1 Commons"},
+    {"Candy Corn (Gun) [HALLOWS2020]","x2 T1 Commons"},
+    {"Carved (Knife)","x2 T1 Commons"},{"Coal (Knife) [XMAS2022]","x2 T1 Commons"},
+    {"Giftwrap","x2 T1 Commons"},{"Haunted","x2 T1 Commons"},{"Watcher (Knife)","x2 T1 Commons"},
+    {"Candy Corn (Knife) [HALLOWS2022]","x2 T1 Commons"},{"Eyeball","x2 T1 Commons"},
+    {"Snowman (Knife) [XMAS2022]","x2 T1 Commons"},
+    {"Stickers (Gun) [HALLOWS2021]","x2 T1 Commons"},
+    {"Stickers (Gun) [XMAS2021]","x2 T1 Commons"},
+    {"Stickers (Knife) [HALLOWS2021]","x2 T1 Commons"},
+    {"Stickers (Knife) [XMAS2021]","x2 T1 Commons"},{"Balloons","x2 T1 Commons"},
+    {"Bats (Knife) [HALLOWS2024]","x2 T1 Commons"},{"Bells","x2 T1 Commons"},
+    {"Candy Corn (Gun) [HALLOWS2024]","x2 T1 Commons"},
+    {"Candy Corn (Knife) [HALLOWS2025]","x2 T1 Commons"},{"Cherries","x2 T1 Commons"},
+    {"Clownfish (Gun)","x2 T1 Commons"},{"Coconut","x2 T1 Commons"},
+    {"Dolphins","x2 T1 Commons"},{"Duckies","x2 T1 Commons"},{"Elf (2023)","x2 T1 Commons"},
+    {"Fall","x2 T1 Commons"},{"Frozen (Gun)","x2 T1 Commons"},
+    {"Ghosts (2024)","x2 T1 Commons"},{"Hearts (2026)","x2 T1 Commons"},
+    {"Igloo (Knife)","x2 T1 Commons"},{"Leaves","x2 T1 Commons"},
+    {"Leaves","x2 T1 Commons"},{"Lights (Gun)","x2 T1 Commons"},
+    {"Lights (Knife)","x2 T1 Commons"},{"Peppermint (Gun)","x2 T1 Commons"},
+    {"Peppermint (Knife)","x2 T1 Commons"},{"Plaid","x2 T1 Commons"},
+    {"Reindeer","x2 T1 Commons"},{"Sand","x2 T1 Commons"},{"Sandy (Gun)","x2 T1 Commons"},
+    {"Skyline","x2 T1 Commons"},{"Snowball (Gun)","x2 T1 Commons"},
+    {"Snowball (Knife)","x2 T1 Commons"},{"Snowfall","x2 T1 Commons"},
+    {"Spider (2023)","x2 T1 Commons"},{"Starfish (Gun)","x2 T1 Commons"},
+    {"Starfish (Knife)","x2 T1 Commons"},{"Stickers (Gun) [HALLOWS2024]","x2 T1 Commons"},
+    {"Stickers (Gun) [SUMMER2025]","x2 T1 Commons"},
+    {"Stickers (Gun) [XMAS2022]","x2 T1 Commons"},
+    {"Stickers (Gun) [XMAS2024]","x2 T1 Commons"},
+    {"Stickers (Gun) [XMAS2025]","x2 T1 Commons"},
+    {"Stickers (Knife) [HALLOWS2024]","x2 T1 Commons"},
+    {"Stickers (Knife) [SUMMER2023]","x2 T1 Commons"},
+    {"Stickers (Knife) [SUMMER2025]","x2 T1 Commons"},
+    {"Stickers (Knife) [XMAS2024]","x2 T1 Commons"},
+    {"Stickers (Knife) [XMAS2025]","x2 T1 Commons"},
+    {"Stickers [HALLOWS2022]","x2 T1 Commons"},
+    {"Stickers [HALLOWS2025]","x2 T1 Commons"},
+    {"Stickers [THANKSGIVING2025]","x2 T1 Commons"},
+    {"Stockings (2024)","x2 T1 Commons"},{"Strawberries (Gun)","x2 T1 Commons"},
+    {"Strawberries (Knife)","x2 T1 Commons"},{"Striped (Gun)","x2 T1 Commons"},
+    {"Striped (Knife)","x2 T1 Commons"},{"Tourist","x2 T1 Commons"},
+    {"UFOs (Gun)","x2 T1 Commons"},{"Vines (Gun)","x2 T1 Commons"},
+    {"Wood","x2 T1 Commons"},{"Xbox","x2 T1 Commons"},
+
+    {"Clown (Gun)","x1 T1 Common"},{"Clown (Knife)","x1 T1 Common"},
+    {"8Bit","x1 T1 Common"},{"Aqua","x1 T1 Common"},{"Big Kill","x1 T1 Common"},
+    {"Bit","x1 T1 Common"},{"Bleached","x1 T1 Common"},{"Borders","x1 T1 Common"},
+    {"Brown","x1 T1 Common"},{"Cardboard","x1 T1 Common"},{"Cherry","x1 T1 Common"},
+    {"Clan","x1 T1 Common"},{"Cold","x1 T1 Common"},{"Combat","x1 T1 Common"},
+    {"Copper","x1 T1 Common"},{"Eco","x1 T1 Common"},{"Engraved","x1 T1 Common"},
+    {"Fallout","x1 T1 Common"},{"Green","x1 T1 Common"},{"Hardened","x1 T1 Common"},
+    {"HL2","x1 T1 Common"},{"Ice","x1 T1 Common"},{"Infiltrator","x1 T1 Common"},
+    {"Iron","x1 T1 Common"},{"Juice","x1 T1 Common"},{"Leaf","x1 T1 Common"},
+    {"Linked","x1 T1 Common"},{"Log","x1 T1 Common"},{"Love (Knife)","x1 T1 Common"},
+    {"Lovely","x1 T1 Common"},{"News","x1 T1 Common"},{"Oily","x1 T1 Common"},
+    {"Orange","x1 T1 Common"},{"Pea","x1 T1 Common"},{"Sandy","x1 T1 Common"},
+    {"Shaded","x1 T1 Common"},{"Slate","x1 T1 Common"},{"Splat","x1 T1 Common"},
+    {"Splatter","x1 T1 Common"},{"Stainless","x1 T1 Common"},{"Star","x1 T1 Common"},
+    {"Static","x1 T1 Common"},{"Whiteout","x1 T1 Common"},{"Yellow","x1 T1 Common"}
+}
+
+--==================================================
+-- CATEGORY BUILD
+--==================================================
+
+local Categories = {
+    ["💗 Godlies"] = {Data = Godlies, Color = Color3.fromRGB(255,105,180)},
+    ["🟡 Vintages"] = {Data = Vintages, Color = Color3.fromRGB(255,205,45)},
+    ["💜 Ancients"] = {Data = Ancients, Color = Color3.fromRGB(180,80,255)},
+    ["🌈 Croma"] = {Data = Cromas, Color = Color3.fromRGB(120,220,255)},
+    ["❤️ Legendaries"] = {Data = Legendaries, Color = Color3.fromRGB(255,75,75)},
+    ["🔵 Rares"] = {Data = {}, Color = Color3.fromRGB(80,150,255)},
+    ["🟣 Uncommons"] = {Data = {}, Color = Color3.fromRGB(180,100,255)},
+    ["⚪ Commons"] = {Data = {}, Color = Color3.fromRGB(190,190,190)}
+}
+
+for _, item in ipairs(CommonMaster) do
+    local value = tostring(item[2])
+    if string.find(value, "T1 Rare", 1, true) then
+        table.insert(Categories["🔵 Rares"].Data, item)
+    elseif string.find(value, "T1 Uncommon", 1, true) then
+        table.insert(Categories["🟣 Uncommons"].Data, item)
+    else
+        table.insert(Categories["⚪ Commons"].Data, item)
+    end
+end
+
+
+--==================================================
+-- AUTO UPDATE SETTINGS
+--==================================================
+-- Put your JSON database URL here.
+-- Leave blank to use the built-in values.
+local REMOTE_VALUES_URL = ""
+
+local function ApplyRemoteValues()
+    if REMOTE_VALUES_URL == "" then return false end
+
+    local ok, raw = pcall(function()
+        return game:HttpGet(REMOTE_VALUES_URL)
+    end)
+    if not ok then return false end
+
+    local ok2, data = pcall(function()
+        return game:GetService("HttpService"):JSONDecode(raw)
+    end)
+    if not ok2 or type(data) ~= "table" then return false end
+
+    local map = {
+        Godlies="💗 Godlies", Vintages="🟡 Vintages",
+        Ancients="💜 Ancients", Croma="🌈 Croma",
+        Legendaries="❤️ Legendaries", Rares="🔵 Rares",
+        Uncommons="🟣 Uncommons", Commons="⚪ Commons"
+    }
+
+    for remoteName, categoryName in pairs(map) do
+        if type(data[remoteName]) == "table" then
+            local newData = {}
+            for _, item in ipairs(data[remoteName]) do
+                if type(item) == "table" and item[1] ~= nil and item[2] ~= nil then
+                    table.insert(newData, {tostring(item[1]), item[2]})
+                end
+            end
+            Categories[categoryName].Data = newData
+        end
+    end
+    return true
+end
+
+--==================================================
+-- HELPERS
+--==================================================
+
+local function Corner(parent, radius)
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, radius)
+    c.Parent = parent
+    return c
+end
+
+local function Stroke(parent, color, thickness)
+    local s = Instance.new("UIStroke")
+    s.Color = color
+    s.Thickness = thickness or 1
+    s.Transparency = 0.15
+    s.Parent = parent
+    return s
+end
+
+local function MakeDraggable(frame, handle)
+    handle = handle or frame
+    local dragging = false
+    local dragStart
+    local startPos
+
+    handle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1
+        or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    UIS.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement
+        or input.UserInputType == Enum.UserInputType.Touch) then
+            local delta = input.Position - dragStart
+            frame.Position = UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+end
+
+--==================================================
+-- MAIN UI
+--==================================================
+
+local Main = Instance.new("Frame")
+Main.Name = "Main"
+Main.Size = UDim2.fromOffset(490,450)
+Main.Position = UDim2.new(0.5,-245,0.5,-225)
+Main.BackgroundColor3 = Color3.fromRGB(20,20,26)
+Main.BorderSizePixel = 0
+Main.Parent = ScreenGui
+Corner(Main,14)
+Stroke(Main,Color3.fromRGB(70,70,85),1)
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1,-55,0,42)
+Title.Position = UDim2.fromOffset(12,4)
+Title.BackgroundTransparency = 1
+Title.Text = "💎 MM2 VALUES"
+Title.TextColor3 = Color3.new(1,1,1)
+Title.TextSize = 20
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Main
+
+local Close = Instance.new("TextButton")
+Close.Size = UDim2.fromOffset(36,32)
+Close.Position = UDim2.new(1,-42,0,7)
+Close.BackgroundColor3 = Color3.fromRGB(170,45,55)
+Close.Text = "×"
+Close.TextColor3 = Color3.new(1,1,1)
+Close.TextSize = 24
+Close.Font = Enum.Font.GothamBold
+Close.Parent = Main
+Corner(Close,9)
+
+local Sidebar = Instance.new("Frame")
+Sidebar.Size = UDim2.fromOffset(125,395)
+Sidebar.Position = UDim2.fromOffset(8,48)
+Sidebar.BackgroundColor3 = Color3.fromRGB(27,27,35)
+Sidebar.BorderSizePixel = 0
+Sidebar.Parent = Main
+Corner(Sidebar,10)
+
+local SideScroll = Instance.new("ScrollingFrame")
+SideScroll.Size = UDim2.new(1,-4,1,-4)
+SideScroll.Position = UDim2.fromOffset(2,2)
+SideScroll.BackgroundTransparency = 1
+SideScroll.BorderSizePixel = 0
+SideScroll.ScrollBarThickness = 3
+SideScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+SideScroll.CanvasSize = UDim2.new()
+SideScroll.Parent = Sidebar
+
+local SideLayout = Instance.new("UIListLayout")
+SideLayout.Padding = UDim.new(0,5)
+SideLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+SideLayout.Parent = SideScroll
+
+local Content = Instance.new("Frame")
+Content.Size = UDim2.fromOffset(349,395)
+Content.Position = UDim2.fromOffset(133,48)
+Content.BackgroundTransparency = 1
+Content.Parent = Main
+
+local Search = Instance.new("TextBox")
+Search.Size = UDim2.new(1,0,0,38)
+Search.BackgroundColor3 = Color3.fromRGB(31,31,40)
+Search.BorderSizePixel = 0
+Search.PlaceholderText = "🔎 Search item..."
+Search.PlaceholderColor3 = Color3.fromRGB(135,135,145)
+Search.Text = ""
+Search.TextColor3 = Color3.new(1,1,1)
+Search.TextSize = 14
+Search.Font = Enum.Font.Gotham
+Search.ClearTextOnFocus = false
+Search.Parent = Content
+Corner(Search,9)
+Stroke(Search,Color3.fromRGB(65,65,80),1)
+
+local List = Instance.new("ScrollingFrame")
+List.Size = UDim2.new(1,0,1,-45)
+List.Position = UDim2.fromOffset(0,45)
+List.BackgroundColor3 = Color3.fromRGB(25,25,32)
+List.BorderSizePixel = 0
+List.ScrollBarThickness = 4
+List.AutomaticCanvasSize = Enum.AutomaticSize.Y
+List.CanvasSize = UDim2.new()
+List.Parent = Content
+Corner(List,9)
+
+local ListLayout = Instance.new("UIListLayout")
+ListLayout.Padding = UDim.new(0,4)
+ListLayout.Parent = List
+
+local ActiveCategory = "💗 Godlies"
+
+local function ClearList()
+    for _, child in ipairs(List:GetChildren()) do
+        if child:IsA("Frame") then
+            child:Destroy()
+        end
+    end
+end
+
+local function AddItem(name, value, rarityColor)
+    local Row = Instance.new("Frame")
+    Row.Size = UDim2.new(1,-8,0,46)
+    Row.BackgroundColor3 = Color3.fromRGB(32,32,41)
+    Row.BorderSizePixel = 0
+    Row.Parent = List
+    Corner(Row,8)
+
+    local Name = Instance.new("TextLabel")
+    Name.Size = UDim2.new(0.52,0,1,0)
+    Name.Position = UDim2.fromOffset(8,0)
+    Name.BackgroundTransparency = 1
+    Name.Text = tostring(name)
+    Name.TextColor3 = Color3.new(1,1,1)
+    Name.TextSize = 12
+    Name.Font = Enum.Font.GothamMedium
+    Name.TextXAlignment = Enum.TextXAlignment.Left
+    Name.TextTruncate = Enum.TextTruncate.AtEnd
+    Name.Parent = Row
+
+    local Value = Instance.new("TextLabel")
+    Value.Size = UDim2.new(0.25,0,1,0)
+    Value.Position = UDim2.new(0.52,0,0,0)
+    Value.BackgroundTransparency = 1
+    Value.Text = tostring(value)
+    Value.TextColor3 = Color3.fromRGB(255,210,70)
+    Value.TextSize = 11
+    Value.Font = Enum.Font.GothamBold
+    Value.TextXAlignment = Enum.TextXAlignment.Center
+    Value.TextTruncate = Enum.TextTruncate.AtEnd
+    Value.Parent = Row
+
+    local Rarity = Instance.new("TextLabel")
+    Rarity.Size = UDim2.new(0.23,-5,1,0)
+    Rarity.Position = UDim2.new(0.77,0,0,0)
+    Rarity.BackgroundTransparency = 1
+    Rarity.Text = ActiveCategory:gsub("^%S+%s*","")
+    Rarity.TextColor3 = rarityColor
+    Rarity.TextSize = 10
+    Rarity.Font = Enum.Font.GothamBold
+    Rarity.TextXAlignment = Enum.TextXAlignment.Right
+    Rarity.Parent = Row
+end
+
+local function Refresh()
+    ClearList()
+
+    local category = Categories[ActiveCategory]
+    if not category then return end
+
+    local query = string.lower(Search.Text or "")
+
+    for _, item in ipairs(category.Data) do
+        local name = tostring(item[1])
+        if query == "" or string.find(string.lower(name), query, 1, true) then
+            AddItem(name, item[2], category.Color)
+        end
+    end
+end
+
+local function SelectCategory(name, button)
+    ActiveCategory = name
+
+    for _, child in ipairs(SideScroll:GetChildren()) do
+        if child:IsA("TextButton") then
+            child.BackgroundColor3 = Color3.fromRGB(38,38,48)
+        end
+    end
+
+    button.BackgroundColor3 = Color3.fromRGB(55,55,70)
+    Search.Text = ""
+    Refresh()
+end
+
+for name, info in pairs(Categories) do
+    local Button = Instance.new("TextButton")
+    Button.Size = UDim2.new(1,-8,0,36)
+    Button.BackgroundColor3 = Color3.fromRGB(38,38,48)
+    Button.BorderSizePixel = 0
+    Button.Text = name
+    Button.TextColor3 = info.Color
+    Button.TextSize = 11
+    Button.Font = Enum.Font.GothamBold
+    Button.Parent = SideScroll
+    Corner(Button,8)
+
+    Button.Activated:Connect(function()
+        SelectCategory(name, Button)
+    end)
+end
+
+-- Force requested order because pairs() is unordered.
+local requestedOrder = {
+    "💗 Godlies","🟡 Vintages","💜 Ancients","🌈 Croma",
+    "❤️ Legendaries","🔵 Rares","🟣 Uncommons","⚪ Commons"
+}
+
+for _, child in ipairs(SideScroll:GetChildren()) do
+    if child:IsA("TextButton") then
+        child:Destroy()
+    end
+end
+
+for _, name in ipairs(requestedOrder) do
+    local info = Categories[name]
+    local Button = Instance.new("TextButton")
+    Button.Size = UDim2.new(1,-8,0,36)
+    Button.BackgroundColor3 = Color3.fromRGB(38,38,48)
+    Button.BorderSizePixel = 0
+    Button.Text = name
+    Button.TextColor3 = info.Color
+    Button.TextSize = 11
+    Button.Font = Enum.Font.GothamBold
+    Button.Parent = SideScroll
+    Corner(Button,8)
+
+    Button.Activated:Connect(function()
+        SelectCategory(name, Button)
+    end)
+
+    if name == ActiveCategory then
+        Button.BackgroundColor3 = Color3.fromRGB(55,55,70)
+    end
+end
+
+Search:GetPropertyChangedSignal("Text"):Connect(Refresh)
+
+MakeDraggable(Main, Title)
+
+Close.Activated:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+--==================================================
+-- FLOATING TOGGLE ICON
+--==================================================
+
+local Icon = Instance.new("ImageButton")
+Icon.Name = "ToggleIcon"
+Icon.Size = UDim2.fromOffset(58,58)
+Icon.Position = UDim2.new(0,20,0.5,-29)
+Icon.BackgroundTransparency = 1
+Icon.BorderSizePixel = 0
+Icon.Image = "rbxthumb://type=Asset&id=99317971916804&w=420&h=420"
+Icon.ScaleType = Enum.ScaleType.Fit
+Icon.Parent = ScreenGui
+
+Corner(Icon,29)
+
+local Outline = Instance.new("UIStroke")
+Outline.Name = "StatusOutline"
+Outline.Thickness = 3
+Outline.Color = Color3.fromRGB(45,190,90)
+Outline.Parent = Icon
+
+local Enabled = true
+
+Icon.Activated:Connect(function()
+    Enabled = not Enabled
+    Main.Visible = Enabled
+
+    if Enabled then
+        Outline.Color = Color3.fromRGB(45,190,90)
+    else
+        Outline.Color = Color3.fromRGB(190,55,65)
+    end
+end)
+
+MakeDraggable(Icon, Icon)
+
+Refresh()
+
+task.spawn(function()
+    while ScreenGui.Parent do
+        task.wait(300) -- 5 minutes
+        if ApplyRemoteValues() then
+            Refresh()
+        end
+    end
+end)
