@@ -2874,7 +2874,7 @@ ToggleButton.Parent = ScreenGui
 ToggleButton.Size = UDim2.new(0, 40, 0, 40)
 ToggleButton.Position = UDim2.new(0.1, 0, 0.1, 0)
 ToggleButton.BackgroundTransparency = 1
-ToggleButton.Image = "rbxthumb://type=Asset&id=99317971916804&w=420&h=420"
+ToggleButton.Image = "rbxthumb://type=Asset&id=128498744096272&w=420&h=420"
 ToggleButton.ImageColor3 = Color3.new(1, 1, 1)
 ToggleButton.ScaleType = Enum.ScaleType.Fit
 ToggleButton.ZIndex = 100
