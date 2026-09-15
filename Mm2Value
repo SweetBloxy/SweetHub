@@ -641,7 +641,7 @@ Icon.Size = UDim2.fromOffset(58,58)
 Icon.Position = UDim2.new(0,20,0.5,-29)
 Icon.BackgroundTransparency = 1
 Icon.BorderSizePixel = 0
-Icon.Image = "rbxthumb://type=Asset&id=99317971916804&w=420&h=420"
+Icon.Image = "rbxthumb://type=Asset&id=128498744096272&w=420&h=420"
 Icon.ScaleType = Enum.ScaleType.Fit
 Icon.Parent = ScreenGui
 
