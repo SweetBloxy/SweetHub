@@ -1,0 +1,2260 @@
+-- This file was generated at discord.gg/syncrypt
+
+local t1 = {}
+local t2 = {}
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+t2.value1 = Players
+t2.value2 = UserInputService
+t2.value3 = RunService
+t2.value4 = game:GetService("HttpService")
+t2.value5 = game:GetService("StarterGui")
+t2.value6 = game:GetService("TweenService")
+t2.value7 = t2.value1.LocalPlayer
+t2.value7:GetMouse()
+t2.value8 = nil
+t2.value9 = nil
+t2.value10 = nil
+t2.value11 = true
+local Character = t2.value7.Character
+if not Character then
+    Character = t2.value7.CharacterAdded:Wait()
+end
+t2.value8 = Character
+local HumanoidRootPart = t2.value8:WaitForChild("HumanoidRootPart")
+local Humanoid = t2.value8:WaitForChild("Humanoid")
+
+t2.value9 = HumanoidRootPart
+t2.value10 = Humanoid
+t2.value7.CharacterAdded:Connect(function()
+    local Character2 = t2.value7.Character
+
+    if not Character2 then
+        Character2 = t2.value7.CharacterAdded:Wait()
+    end
+
+    t2.value8 = Character2
+
+    local HumanoidRootPart2 = t2.value8:WaitForChild("HumanoidRootPart")
+    local Humanoid2 = t2.value8:WaitForChild("Humanoid")
+
+    t2.value9 = HumanoidRootPart2
+    t2.value10 = Humanoid2
+end)
+t2.value12 = {
+	method = "CAMERA",
+	whOn = false,
+	legit = true,
+	camAutoWhOn = true,
+	camIjOn = false,
+	camGfOn = false,
+	charAutoWhOn = false,
+	charIjOn = false,
+	charGfOn = false,
+	fDeg = 45,
+	fSpd = 0.05,
+	gExt = 2,
+	flickDir = "LEFT",
+	cDeg = 57,
+	cSpd = 0.2,
+	cGExt = 2
+}
+t2.value13 = Vector2.new(600, 400)
+
+local method = t2.value12.method
+local whOn = t2.value12.whOn
+local legit = t2.value12.legit
+local camAutoWhOn = t2.value12.camAutoWhOn
+local camIjOn = t2.value12.camIjOn
+local camGfOn = t2.value12.camGfOn
+local charAutoWhOn = t2.value12.charAutoWhOn
+local charIjOn = t2.value12.charIjOn
+local charGfOn = t2.value12.charGfOn
+local fDeg = t2.value12.fDeg
+local fSpd = t2.value12.fSpd
+local gExt = t2.value12.gExt
+local flickDir = t2.value12.flickDir
+local cDeg = t2.value12.cDeg
+local cSpd = t2.value12.cSpd
+local cGExt = t2.value12.cGExt
+t2.value14 = {
+	method = method,
+	whOn = whOn,
+	legit = legit,
+	camAutoWhOn = camAutoWhOn,
+	camIjOn = camIjOn,
+	camGfOn = camGfOn,
+	charAutoWhOn = charAutoWhOn,
+	charIjOn = charIjOn,
+	charGfOn = charGfOn,
+	fDeg = fDeg,
+	fSpd = fSpd,
+	gExt = gExt,
+	flickDir = flickDir,
+	cDeg = cDeg,
+	cSpd = cSpd,
+	cGExt = cGExt
+}
+t2.value15 = false
+t2.value16 = {}
+t2.value17 = false
+t2.value18 = ""
+t2.value19 = ""
+t2.value20 = true
+t2.value21 = 0.05
+t2.value22 = {
+	0.01,
+	0.05,
+	0.1,
+	1,
+	5,
+	10
+}
+local _listfiles = listfiles
+if not _listfiles then
+    t1.value1 = syn_io_listfiles
+    _listfiles = t1.value1
+
+    if not t1.value1 then
+        t1.value2 = filesystem
+        t1.value1 = t1.value2
+
+        if t1.value2 then
+            t1.value1 = filesystem.list
+        end
+
+        _listfiles = t1.value1
+    end
+end
+t2.value23 = _listfiles
+local _readfile = readfile
+if not _readfile then
+    _readfile = filesystem
+
+    if _readfile then
+        _readfile = filesystem.read
+    end
+end
+t2.value24 = _readfile
+t1.value1 = writefile
+local value1 = t1.value1
+if not t1.value1 then
+    t1.value2 = filesystem
+    t1.value1 = t1.value2
+
+    if t1.value2 then
+        t1.value1 = filesystem.write
+    end
+
+    value1 = t1.value1
+end
+t2.value25 = value1
+local _delfile = delfile
+if not _delfile then
+    _delfile = deletefile
+
+    if not _delfile then
+        _delfile = filesystem
+
+        if _delfile then
+            _delfile = filesystem.remove
+        end
+    end
+end
+t2.value26 = _delfile
+t1.value2 = isfolder
+local value2 = t1.value2
+if not t1.value2 then
+    t1.value3 = filesystem
+    t1.value2 = t1.value3
+
+    if t1.value3 then
+        t1.value2 = filesystem.isfolder
+    end
+
+    value2 = t1.value2
+end
+local _makefolder = makefolder
+if not _makefolder then
+    _makefolder = filesystem
+
+    if _makefolder then
+        _makefolder = filesystem.makefolder
+    end
+end
+t1.value3 = isfile
+t1.value2 = t1.value3
+if not t1.value3 then
+    t1.value4 = filesystem
+    t1.value3 = t1.value4
+
+    if t1.value4 then
+        t1.value3 = filesystem.isfile
+    end
+
+    t1.value2 = t1.value3
+end
+t2.value27 = t1.value2
+t1.value2 = _makefolder and not value2("WallhopEngine")
+
+if t1.value2 then
+    _makefolder("WallhopEngine")
+end
+t1.value3 = Instance.new("ScreenGui", t2.value7:WaitForChild("PlayerGui"))
+t2.value28 = t1.value3
+t1.value3 = t2.value28
+t1.value3.Name = "WallhopEngine"
+t1.value3 = t2.value28
+t1.value3.ResetOnSpawn = false
+t1.value3 = {}
+t2.value29 = nil
+function t1.value4(p1, p2)
+    local Frame = Instance.new("Frame", t2.value28)
+
+    Frame.Size = UDim2.new(0, 320, 0, 420)
+    Frame.Position = UDim2.new(1, 50, 0.82, -(#t2.value29 * 135))
+    Frame.BackgroundColor3 = Color3.fromRGB(16, 16, 20)
+    Frame.BorderSizePixel = 0
+    Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 8)
+
+    local UIStroke = Instance.new("UIStroke", Frame)
+
+    UIStroke.Color = Color3.fromRGB(255, 35, 35)
+    UIStroke.Thickness = 2
+    UIStroke.Transparency = 0.3
+
+    local UIStroke2 = Instance.new("UIStroke", Frame)
+
+    UIStroke2.Color = Color3.fromRGB(255, 90, 90)
+    UIStroke2.Thickness = 1
+
+    local TextLabel = Instance.new("TextLabel", Frame)
+
+    TextLabel.Size = UDim2.new(1, -24, 0, 24)
+    TextLabel.Position = UDim2.new(0, 14, 0, 10)
+    TextLabel.Text = string.upper(p1)
+    TextLabel.TextColor3 = Color3.fromRGB(255, 65, 65)
+    TextLabel.Font = Enum.Font.Arcade
+    TextLabel.TextSize = 14
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+    local TextLabel2 = Instance.new("TextLabel", Frame)
+
+    TextLabel2.Size = UDim2.new(1, -28, 0, 42)
+    TextLabel2.Position = UDim2.new(0, 14, 0, 34)
+    TextLabel2.Text = p2
+    TextLabel2.TextColor3 = Color3.fromRGB(225, 225, 230)
+    TextLabel2.Font = Enum.Font.Arcade
+    TextLabel2.TextSize = 12
+    TextLabel2.BackgroundTransparency = 1
+    TextLabel2.TextWrapped = true
+    TextLabel2.TextYAlignment = Enum.TextYAlignment.Top
+    TextLabel2.TextXAlignment = Enum.TextXAlignment.Left
+
+    local Frame2 = Instance.new("Frame", Frame)
+
+    Frame2.Size = UDim2.new(1, -28, 0, 30)
+    Frame2.Position = UDim2.new(0, 14, 1, -40)
+    Frame2.BackgroundTransparency = 1
+
+    local TextButton = Instance.new("TextButton", Frame2)
+
+    TextButton.Size = UDim2.new(0.47, 0, 1, 0)
+    TextButton.Position = UDim2.new(0, 0, 0, 0)
+    TextButton.BackgroundColor3 = Color3.fromRGB(30, 85, 55)
+    TextButton.Text = "OK"
+    TextButton.TextColor3 = Color3.new(1, 1, 1)
+    TextButton.Font = Enum.Font.Arcade
+    TextButton.TextSize = 12
+    Instance.new("UICorner", TextButton).CornerRadius = UDim.new(0, 5)
+    Instance.new("UIStroke", TextButton).Color = Color3.fromRGB(45, 125, 85)
+
+    local TextButton2 = Instance.new("TextButton", Frame2)
+
+    TextButton2.Size = UDim2.new(0.49, 0, 1, 0)
+    TextButton2.Position = UDim2.new(0.51, 0, 0, 0)
+    TextButton2.BackgroundColor3 = Color3.fromRGB(115, 35, 35)
+    TextButton2.Text = "I DON'T CARE"
+    TextButton2.TextColor3 = Color3.new(1, 1, 1)
+    TextButton2.Font = Enum.Font.Arcade
+    TextButton2.TextSize = 11
+    Instance.new("UICorner", TextButton2).CornerRadius = UDim.new(0, 5)
+    Instance.new("UIStroke", TextButton2).Color = Color3.fromRGB(165, 50, 50)
+    table.insert(t2.value29, Frame)
+
+    local uDim2 = UDim2.new(1, -330, 0.82, -((#t2.value29 - 1) * 135))
+
+    t2.value6:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+		Position = uDim2
+	}):Play()
+
+    local function v80()
+        local v274 = table.find(t2.value29, Frame)
+
+        if v274 then
+            table.remove(t2.value29, v274)
+        end
+
+        local v275 = t2.value6:Create(Frame, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+			Position = UDim2.new(1, 50, Frame.Position.Y.Scale, Frame.Position.Y.Offset)
+		})
+
+        v275:Play()
+        v275.Completed:Connect(function()
+            Frame:Destroy()
+        end)
+
+        for i, v in ipairs(t2.value29) do
+            local uDim2_2 = UDim2.new(1, -330, 0.82, -((i - 1) * 135))
+
+            t2.value6:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+				Position = uDim2_2
+			}):Play()
+        end
+    end
+
+    TextButton.MouseButton1Click:Connect(function()
+        v80()
+    end)
+    TextButton2.MouseButton1Click:Connect(function()
+        v80()
+    end)
+end
+t2.value29 = t1.value3
+t2.value30 = t1.value4
+t2.value31 = Instance.new("Frame", t2.value28)
+t2.value31.Size = UDim2.new(0, t2.value13.X, 0, t2.value13.Y)
+t2.value31.Position = UDim2.new(0.5, -t2.value13.X / 2, 0.25, -t2.value13.Y / 2)
+t2.value31.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+t2.value31.Active = true
+t2.value31.ClipsDescendants = true
+Instance.new("UICorner", t2.value31).CornerRadius = UDim.new(0, 12)
+
+local UIStroke = Instance.new("UIStroke", t2.value31)
+
+UIStroke.Thickness = 1.5
+UIStroke.Color = Color3.fromRGB(45, 45, 50)
+
+local Frame = Instance.new("Frame", t2.value31)
+
+Frame.Size = UDim2.new(0, 240, 1, 0)
+Frame.BackgroundTransparency = 1
+t2.value32 = Instance.new("Frame", t2.value31)
+t2.value32.Size = UDim2.new(1, -240, 1, 0)
+t2.value32.Position = UDim2.new(0, 240, 0, 0)
+t2.value32.BackgroundTransparency = 1
+t2.value33 = Instance.new("TextButton", Frame)
+t2.value33.Size = UDim2.new(0, 26, 0, 26)
+t2.value33.Position = UDim2.new(1, -32, 0, 8)
+t2.value33.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+t2.value33.Text = "🔓"
+t2.value33.TextSize = 13
+t2.value33.TextColor3 = Color3.fromRGB(200, 200, 200)
+Instance.new("UICorner", t2.value33).CornerRadius = UDim.new(0, 4)
+
+local TextButton = Instance.new("TextButton", Frame)
+
+TextButton.Size = UDim2.new(0, 26, 0, 26)
+TextButton.Position = UDim2.new(1, -64, 0, 8)
+TextButton.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+TextButton.Text = "➖"
+TextButton.TextSize = 11
+TextButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+Instance.new("UICorner", TextButton).CornerRadius = UDim.new(0, 4)
+
+local TextButton3 = Instance.new("TextButton", Frame)
+
+TextButton3.Size = UDim2.new(0, 26, 0, 26)
+TextButton3.Position = UDim2.new(1, -96, 0, 8)
+TextButton3.BackgroundColor3 = Color3.fromRGB(35, 25, 25)
+TextButton3.Text = "❌"
+TextButton3.TextSize = 11
+TextButton3.TextColor3 = Color3.fromRGB(240, 70, 70)
+Instance.new("UICorner", TextButton3).CornerRadius = UDim.new(0, 4)
+Instance.new("UIStroke", TextButton3).Color = Color3.fromRGB(70, 40, 40)
+t2.value34 = Instance.new("TextButton", Frame)
+t2.value34.Size = UDim2.new(1, -105, 0, 32)
+t2.value34.Position = UDim2.new(0, 12, 0, 4)
+t2.value34.BackgroundTransparency = 1
+t2.value34.Text = "Wallhop : OFF"
+t2.value34.TextColor3 = Color3.fromRGB(240, 70, 70)
+t2.value34.TextSize = 15
+t2.value34.Font = Enum.Font.Arcade
+t2.value35 = Instance.new("ImageButton", t2.value28)
+t2.value35.Size = UDim2.new(0, 55, 0, 55)
+t2.value35.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+
+-- Icon image fix: use the supplied Roblox asset on the existing icon object.
+local ICON_ASSET = "rbxthumb://type=Asset&id=99317971916804&w=420&h=420"
+local function applyIconAsset(iconObject)
+    if iconObject and (iconObject:IsA("ImageButton") or iconObject:IsA("ImageLabel")) then
+        iconObject.Image = ICON_ASSET
+        iconObject.ImageTransparency = 0
+        iconObject.BackgroundTransparency = iconObject.BackgroundTransparency
+    end
+end
+
+t2.value35.Image = "rbxthumb://type=Asset&id=99317971916804&w=420&h=420"
+t2.value35.ImageColor3 = Color3.fromRGB(255, 255, 255)
+t2.value35.Visible = false
+t2.value35.Active = true
+Instance.new("UICorner", t2.value35).CornerRadius = UDim.new(1, 0)
+t2.value36 = Instance.new("UIStroke", t2.value35)
+t2.value36.Thickness = 2
+t2.value36.Color = Color3.fromRGB(240, 70, 70)
+t2.value37 = Instance.new("TextButton", Frame)
+t2.value37.Size = UDim2.new(1, -24, 0, 30)
+t2.value37.Position = UDim2.new(0, 12, 0, 38)
+t2.value37.BackgroundColor3 = Color3.fromRGB(30, 35, 45)
+t2.value37.Text = "METHOD: CAMERA FLICK"
+t2.value37.TextColor3 = Color3.fromRGB(120, 180, 240)
+t2.value37.Font = Enum.Font.Arcade
+t2.value37.TextSize = 11
+Instance.new("UICorner", t2.value37).CornerRadius = UDim.new(0, 6)
+Instance.new("UIStroke", t2.value37).Color = Color3.fromRGB(50, 60, 80)
+t2.value38 = Instance.new("Frame", Frame)
+t2.value38.Size = UDim2.new(1, 0, 1, -75)
+t2.value38.Position = UDim2.new(0, 0, 0, 75)
+t2.value38.BackgroundTransparency = 1
+t2.value39 = Instance.new("Frame", Frame)
+t2.value39.Size = UDim2.new(1, 0, 1, -75)
+t2.value39.Position = UDim2.new(0, 0, 0, 75)
+t2.value39.BackgroundTransparency = 1
+t2.value39.Visible = false
+t2.value40 = nil
+local function v35(p3, p4, p5, p6)
+    local TextButton4 = Instance.new("TextButton", p3)
+
+    TextButton4.Size = UDim2.new(1, -24, 0, 28)
+    TextButton4.Position = UDim2.new(0, 12, 0, p4)
+    TextButton4.BackgroundColor3 = p6
+    TextButton4.Text = p5
+    TextButton4.TextColor3 = Color3.new(1, 1, 1)
+    TextButton4.TextSize = 11
+    TextButton4.Font = Enum.Font.Arcade
+    Instance.new("UICorner", TextButton4).CornerRadius = UDim.new(0, 6)
+    Instance.new("UIStroke", TextButton4).Color = Color3.fromRGB(55, 55, 60)
+
+    return TextButton4
+end
+function t2.value40(p7)
+    if p7 == "CHARACTER" then
+        return "char"
+    end
+
+    return "cam"
+end
+function t2.value41(p8)
+    local v87 = t2.value40(p8)
+    local v88 = rawget(t2.value14, v87 .. "AutoWhOn")
+    local v89 = rawget(t2.value14, v87 .. "IjOn")
+    local v90 = rawget(t2.value14, v87 .. "GfOn")
+
+    return {
+		autoWhOn = v88,
+		ijOn = v89,
+		gfOn = v90
+	}
+end
+t2.value42 = v35(t2.value38, 2, "LEGIT MODE", Color3.fromRGB(25, 25, 25))
+t2.value43 = v35(t2.value38, 34, "INF JUMP: OFF", Color3.fromRGB(140, 45, 55))
+t2.value44 = v35(t2.value38, 66, "GAP FILLER: OFF", Color3.fromRGB(140, 45, 55))
+t2.value45 = v35(t2.value38, 98, "FLICK DIR: LEFT", Color3.fromRGB(35, 75, 135))
+t2.value46 = v35(t2.value39, 2, "AUTO WH: OFF", Color3.fromRGB(140, 45, 55))
+t2.value47 = v35(t2.value39, 34, "INF JUMP: OFF", Color3.fromRGB(140, 45, 55))
+t2.value48 = v35(t2.value39, 66, "GAP FILLER: OFF", Color3.fromRGB(140, 45, 55))
+t2.value49 = Instance.new("TextButton", Frame)
+t2.value49.Size = UDim2.new(1, -24, 0, 30)
+t2.value49.Position = UDim2.new(0, 12, 0, 360)
+t2.value49.BackgroundColor3 = Color3.fromRGB(45, 35, 60)
+t2.value49.Text = "STEP VALUE: 0.05"
+t2.value49.TextColor3 = Color3.fromRGB(190, 160, 235)
+t2.value49.Font = Enum.Font.Arcade
+t2.value49.TextSize = 11
+Instance.new("UICorner", t2.value49).CornerRadius = UDim.new(0, 6)
+Instance.new("UIStroke", t2.value49).Color = Color3.fromRGB(75, 60, 95)
+t2.value49.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    local v92 = table.find(t2.value22, t2.value21) or 2
+
+    t2.value21 = t2.value22[v92 % #t2.value22 + 1]
+    t2.value49.Text = "STEP VALUE: " .. tostring(t2.value21)
+end)
+
+local TextButton5 = Instance.new("TextButton", Frame)
+
+TextButton5.Size = UDim2.new(1, -24, 0, 34)
+TextButton5.Position = UDim2.new(0, 12, 0, 400)
+TextButton5.BackgroundColor3 = Color3.fromRGB(140, 35, 35)
+TextButton5.Text = "RESET EVERYTHING"
+TextButton5.TextColor3 = Color3.new(1, 1, 1)
+TextButton5.Font = Enum.Font.Arcade
+TextButton5.TextSize = 12
+Instance.new("UICorner", TextButton5).CornerRadius = UDim.new(0, 6)
+
+local UIStroke3 = Instance.new("UIStroke", TextButton5)
+
+UIStroke3.Color = Color3.fromRGB(180, 50, 50)
+UIStroke3.Thickness = 1
+local TextButton6 = Instance.new("TextButton", Frame)
+
+TextButton6.Size = UDim2.new(1, -24, 0, 34)
+TextButton6.Position = UDim2.new(0, 12, 0, 440)
+TextButton6.BackgroundColor3 = Color3.fromRGB(45, 45, 52)
+TextButton6.Text = "TIPS FOR USING SCRIPT"
+TextButton6.TextColor3 = Color3.fromRGB(230, 230, 235)
+TextButton6.Font = Enum.Font.Arcade
+TextButton6.TextSize = 11
+Instance.new("UICorner", TextButton6).CornerRadius = UDim.new(0, 6)
+
+local UIStroke4 = Instance.new("UIStroke", TextButton6)
+
+UIStroke4.Color = Color3.fromRGB(70, 70, 80)
+UIStroke4.Thickness = 1
+t2.value50 = Instance.new("TextButton", Frame)
+t2.value50.Size = UDim2.new(1, -24, 0, 34)
+t2.value50.Position = UDim2.new(0, 12, 0, 480)
+t2.value50.BackgroundColor3 = Color3.fromRGB(140, 45, 55)
+t2.value50.Text = "SHOW AUTO WH WALLS: OFF"
+t2.value50.TextColor3 = Color3.fromRGB(255, 255, 255)
+t2.value50.Font = Enum.Font.Arcade
+t2.value50.TextSize = 10
+Instance.new("UICorner", t2.value50).CornerRadius = UDim.new(0, 6)
+Instance.new("UIStroke", t2.value50).Color = Color3.fromRGB(55, 55, 60)
+t2.value51 = Instance.new("TextButton", Frame)
+t2.value51.Size = UDim2.new(1, -24, 0, 34)
+t2.value51.Position = UDim2.new(0, 12, 0, 520)
+t2.value51.BackgroundColor3 = Color3.fromRGB(35, 100, 140)
+t2.value51.Text = "RECOMMENDED SETTINGS"
+t2.value51.TextColor3 = Color3.new(1, 1, 1)
+t2.value51.Font = Enum.Font.Arcade
+t2.value51.TextSize = 12
+Instance.new("UICorner", t2.value51).CornerRadius = UDim.new(0, 6)
+
+local UIStroke5 = Instance.new("UIStroke", t2.value51)
+
+UIStroke5.Color = Color3.fromRGB(50, 130, 180)
+UIStroke5.Thickness = 1
+function t2.value52(p9)
+    local v96 = not p9
+
+    if not v96 then
+        v96 = not p9.CanCollide or p9.Transparency >= 0.95
+    end
+
+    if v96 then
+        return false
+    end
+
+    local Model = p9:FindFirstAncestorOfClass("Model")
+
+    if Model and (Model:FindFirstChildOfClass("Humanoid") or t2.value1:GetPlayerFromCharacter(Model)) then
+        return false
+    end
+
+    local v98 = string.lower(p9.Name)
+    local v99 = p9:IsA("TrussPart")
+
+    if not v99 then
+        v99 = p9:GetAttribute("Climbable")
+
+        if not v99 then
+            v99 = v98:find("ladder")
+
+            if not v99 then
+                v99 = v98:find("truss")
+
+                if not v99 then
+                    v99 = v98:find("rung")
+                end
+            end
+        end
+    end
+
+    if v99 then
+        return false
+    end
+
+    local p9Size = p9.Size
+    local v101 = p9Size.Y < p9Size.X
+
+    if v101 then
+        v101 = p9Size.Y < p9Size.Z
+    end
+
+    if v101 then
+        return false
+    end
+
+    return true
+end
+function t2.value53()
+    for _, v in pairs(t2.value16) do
+        if v then
+            v:Destroy()
+        end
+    end
+
+    table.clear(t2.value16)
+end
+t2.value54 = Instance.new("Part")
+t2.value54.Transparency = 1
+t2.value54.Anchored = true
+t2.value54.CanCollide = true
+t2.value54.Material = Enum.Material.ForceField
+function t2.value55()
+    local v102 = not t2.value15
+    if not v102 then
+        v102 = not t2.value11 or not t2.value9
+    end
+    if v102 then
+        t2.value53()
+
+        return
+    end
+    local value9Position = t2.value9.Position
+    local vector3 = Vector3.new(50, 50, 50)
+    local overlapParams = OverlapParams.new()
+    overlapParams.FilterDescendantsInstances = {
+		t2.value8,
+		t2.value54
+	}
+    overlapParams.FilterType = Enum.RaycastFilterType.Exclude
+    overlapParams.MaxParts = 100
+    local PartBoundsInBox = workspace:GetPartBoundsInBox(CFrame.new(value9Position), vector3, overlapParams)
+    local t3 = {}
+    for v110, v111 in ipairs(PartBoundsInBox) do
+
+        if v111:IsA("BasePart") and t2.value52(v111) then
+            t3[v111] = true
+
+            if not t2.value16[v111] then
+                local Part = Instance.new("Part")
+
+                Part.Name = "LocalWHEdgeHighlight"
+                Part.Transparency = 0.25
+                Part.Color = Color3.fromRGB(0, 255, 130)
+                Part.Material = Enum.Material.Neon
+                Part.Anchored = true
+                Part.CanCollide = false
+                Part.CanQuery = false
+                Part.CanTouch = false
+                Part.Size = Vector3.new(v111.Size.X + 0.1, 0.3, v111.Size.Z + 0.1)
+                Part.CFrame = v111.CFrame * CFrame.new(0, v111.Size.Y / 2 - 0.1, 0)
+                Part.Parent = workspace
+                t2.value16[v111] = Part
+            end
+        end
+    end
+    for k, v in pairs(t2.value16) do
+        local v115 = k
+
+        if not t3[v115] then
+            if v then
+                v:Destroy()
+            end
+
+            t2.value16[v115] = nil
+        end
+    end
+end
+t2.value50.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value15 = not t2.value15
+    t2.value50.Text = "SHOW AUTO WH WALLS: " .. (not t2.value15 and "OFF" or "ON")
+
+    local value50 = t2.value50
+    local value15 = t2.value15
+
+    if value15 then
+        value15 = Color3.fromRGB(40, 110, 75)
+    end
+
+    if not value15 then
+        value15 = Color3.fromRGB(140, 45, 55)
+    end
+
+    value50.BackgroundColor3 = value15
+
+    if not t2.value15 then
+        t2.value53()
+    end
+end)
+t2.value56 = {}
+function t2.value57()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value34.Text = "Wallhop : " .. (not t2.value14.whOn and "OFF" or "ON")
+
+    local value34 = t2.value34
+    local whOn2 = t2.value14.whOn
+
+    if whOn2 then
+        whOn2 = Color3.fromRGB(70, 240, 120)
+    end
+
+    if not whOn2 then
+        whOn2 = Color3.fromRGB(240, 70, 70)
+    end
+
+    value34.TextColor3 = whOn2
+
+    local whOn3 = t2.value14.whOn
+
+    if whOn3 then
+        whOn3 = Color3.fromRGB(70, 240, 120)
+    end
+
+    if not whOn3 then
+        whOn3 = Color3.fromRGB(240, 70, 70)
+    end
+
+
+    local value36 = t2.value36
+    local whOn4 = t2.value14.whOn
+
+    if whOn4 then
+        whOn4 = Color3.fromRGB(70, 240, 120)
+    end
+
+    if not whOn4 then
+        whOn4 = Color3.fromRGB(240, 70, 70)
+    end
+
+    value36.Color = whOn4
+    t2.value37.Text = "METHOD: " .. (t2.value14.method ~= "CAMERA" and "CHARACTER FLICK" or "CAMERA FLICK")
+    t2.value38.Visible = t2.value14.method == "CAMERA"
+    t2.value39.Visible = t2.value14.method == "CHARACTER"
+    t2.value51.Visible = t2.value14.method == "CAMERA"
+
+    local v124 = t2.value41("CAMERA")
+
+    t2.value42.Text = not t2.value14.legit and "BLATANT MODE" or "LEGIT MODE"
+
+    local value43 = t2.value43
+    local ijOn = v124.ijOn
+
+    if ijOn then
+        ijOn = Color3.fromRGB(40, 110, 75)
+    end
+
+    if not ijOn then
+        ijOn = Color3.fromRGB(140, 45, 55)
+    end
+
+    value43.BackgroundColor3 = ijOn
+    t2.value43.Text = not v124.ijOn and "INF JUMP: OFF" or "INF JUMP: ON"
+
+    local value44 = t2.value44
+    local gfOn = v124.gfOn
+
+    if gfOn then
+        gfOn = Color3.fromRGB(40, 110, 75)
+    end
+
+    if not gfOn then
+        gfOn = Color3.fromRGB(140, 45, 55)
+    end
+
+    value44.BackgroundColor3 = gfOn
+    t2.value44.Text = not v124.gfOn and "GAP FILLER: OFF" or "GAP FILLER: ON"
+    t2.value45.Text = "FLICK DIR: " .. t2.value14.flickDir
+
+    local value45 = t2.value45
+    local v130 = t2.value14.flickDir == "LEFT"
+
+    if v130 then
+        v130 = Color3.fromRGB(35, 75, 135)
+    end
+
+    if not v130 then
+        v130 = Color3.fromRGB(110, 80, 35)
+    end
+
+    value45.BackgroundColor3 = v130
+
+    local v131 = t2.value41("CHARACTER")
+    local value46 = t2.value46
+    local autoWhOn = v131.autoWhOn
+
+    if autoWhOn then
+        autoWhOn = Color3.fromRGB(40, 110, 75)
+    end
+
+    if not autoWhOn then
+        autoWhOn = Color3.fromRGB(140, 45, 55)
+    end
+
+    value46.BackgroundColor3 = autoWhOn
+    t2.value46.Text = not v131.autoWhOn and "AUTO WH: OFF" or "AUTO WH: ON"
+
+    local value47 = t2.value47
+    local ijOn2 = v131.ijOn
+
+    if ijOn2 then
+        ijOn2 = Color3.fromRGB(40, 110, 75)
+    end
+
+    if not ijOn2 then
+        ijOn2 = Color3.fromRGB(140, 45, 55)
+    end
+
+    value47.BackgroundColor3 = ijOn2
+    t2.value47.Text = not v131.ijOn and "INF JUMP: OFF" or "INF JUMP: ON"
+
+    local value48 = t2.value48
+    local gfOn2 = v131.gfOn
+
+    if gfOn2 then
+        gfOn2 = Color3.fromRGB(40, 110, 75)
+    end
+
+    if not gfOn2 then
+        gfOn2 = Color3.fromRGB(140, 45, 55)
+    end
+
+    value48.BackgroundColor3 = gfOn2
+    t2.value48.Text = not v131.gfOn and "GAP FILLER: OFF" or "GAP FILLER: ON"
+
+    if t2.value56["FLICK DEG:"] then
+        t2.value56["FLICK DEG:"](t2.value14.fDeg)
+    end
+
+    if t2.value56["FLICK SPEED:"] then
+        t2.value56["FLICK SPEED:"](t2.value14.fSpd)
+    end
+
+    if t2.value56["GAP EXPAND:"] then
+        t2.value56["GAP EXPAND:"](t2.value14.gExt)
+    end
+
+    if t2.value56["CHAR DEG:"] then
+        t2.value56["CHAR DEG:"](t2.value14.cDeg)
+    end
+
+    if t2.value56["CHAR SPEED:"] then
+        t2.value56["CHAR SPEED:"](t2.value14.cSpd)
+    end
+
+    if t2.value56["CHAR GAP:"] then
+        t2.value56["CHAR GAP:"](t2.value14.cGExt)
+    end
+end
+local function v41(p10, p11, p12, p13, p14, p15, p16)
+    local Frame3 = Instance.new("Frame", p10)
+
+    Frame3.Size = UDim2.new(1, -24, 0, 36)
+    Frame3.Position = UDim2.new(0, 12, 0, p11)
+    Frame3.BackgroundTransparency = 1
+
+    local TextLabel = Instance.new("TextLabel", Frame3)
+
+    TextLabel.Size = UDim2.new(1, 0, 0, 12)
+    TextLabel.Position = UDim2.new(0, 0, 0, 0)
+    TextLabel.Text = p12
+    TextLabel.Font = Enum.Font.Arcade
+    TextLabel.TextSize = 10
+    TextLabel.TextColor3 = Color3.fromRGB(180, 180, 190)
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+    local TextButton7 = Instance.new("TextButton", Frame3)
+
+    TextButton7.Size = UDim2.new(0, 26, 0, 20)
+    TextButton7.Position = UDim2.new(0, 0, 0, 14)
+    TextButton7.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+    TextButton7.Text = "-"
+    TextButton7.Font = Enum.Font.Arcade
+    TextButton7.TextSize = 13
+    TextButton7.TextColor3 = Color3.new(1, 1, 1)
+    Instance.new("UICorner", TextButton7).CornerRadius = UDim.new(0, 4)
+    Instance.new("UIStroke", TextButton7).Color = Color3.fromRGB(55, 55, 60)
+
+    local TextBox = Instance.new("TextBox", Frame3)
+
+    TextBox.Size = UDim2.new(1, -58, 0, 20)
+    TextBox.Position = UDim2.new(0, 29, 0, 14)
+    TextBox.BackgroundColor3 = Color3.fromRGB(24, 24, 28)
+    TextBox.Text = tostring(p15)
+    TextBox.Font = Enum.Font.Arcade
+    TextBox.TextSize = 11
+    TextBox.TextColor3 = Color3.new(1, 1, 1)
+    Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 4)
+    Instance.new("UIStroke", TextBox).Color = Color3.fromRGB(45, 45, 50)
+
+    local TextButton8 = Instance.new("TextButton", Frame3)
+
+    TextButton8.Size = UDim2.new(0, 26, 0, 20)
+    TextButton8.Position = UDim2.new(1, -26, 0, 14)
+    TextButton8.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+    TextButton8.Text = "+"
+    TextButton8.Font = Enum.Font.Arcade
+    TextButton8.TextSize = 13
+    TextButton8.TextColor3 = Color3.new(1, 1, 1)
+    Instance.new("UICorner", TextButton8).CornerRadius = UDim.new(0, 4)
+    Instance.new("UIStroke", TextButton8).Color = Color3.fromRGB(55, 55, 60)
+
+    local function v150(p17)
+        if not t2.value11 then
+            return
+        end
+
+        local v280 = math.clamp(p17, p13, p14)
+
+        TextBox.Text = string.format("%.2f", v280)
+        p16(v280)
+    end
+
+    TextButton7.MouseButton1Click:Connect(function()
+        v150(tonumber(TextBox.Text) or p15 - t2.value21)
+    end)
+    TextButton8.MouseButton1Click:Connect(function()
+        v150(tonumber(TextBox.Text) or p15 + t2.value21)
+    end)
+    TextBox.FocusLost:Connect(function()
+        local num = tonumber(TextBox.Text)
+
+        if num then
+            v150(num)
+
+            return
+        end
+
+        v150(p15)
+    end)
+    t2.value56[p12] = v150
+    v150(p15)
+end
+v41(t2.value38, 164, "FLICK DEG:", 0, 180, t2.value14.fDeg, function(p18)
+    t2.value14.fDeg = p18
+end)
+v41(t2.value38, 204, "FLICK SPEED:", 0.01, 1, t2.value14.fSpd, function(p19)
+    t2.value14.fSpd = p19
+end)
+v41(t2.value38, 244, "GAP EXPAND:", 0.1, 15, t2.value14.gExt, function(p20)
+    t2.value14.gExt = p20
+end)
+v41(t2.value39, 134, "CHAR DEG:", 0, 180, t2.value14.cDeg, function(p21)
+    t2.value14.cDeg = p21
+end)
+v41(t2.value39, 174, "CHAR SPEED:", 0.01, 1, t2.value14.cSpd, function(p22)
+    t2.value14.cSpd = p22
+end)
+v41(t2.value39, 214, "CHAR GAP:", 0.1, 15, t2.value14.cGExt, function(p23)
+    t2.value14.cGExt = p23
+end)
+t2.value58 = Instance.new("Frame", t2.value28)
+t2.value58.Size = UDim2.new(0, 300, 0, 200)
+t2.value58.Position = UDim2.new(0.5, -150, 0.5, -100)
+t2.value58.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+t2.value58.Visible = false
+t2.value58.Active = true
+Instance.new("UICorner", t2.value58).CornerRadius = UDim.new(0, 10)
+Instance.new("UIStroke", t2.value58).Color = Color3.fromRGB(55, 55, 60)
+
+local TextButton9 = Instance.new("TextButton", t2.value58)
+
+TextButton9.Size = UDim2.new(0, 24, 0, 24)
+TextButton9.Position = UDim2.new(1, -30, 0, 8)
+TextButton9.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+TextButton9.Text = "X"
+TextButton9.TextColor3 = Color3.fromRGB(240, 70, 70)
+TextButton9.Font = Enum.Font.Arcade
+TextButton9.TextSize = 12
+Instance.new("UICorner", TextButton9).CornerRadius = UDim.new(0, 4)
+
+local TextLabel = Instance.new("TextLabel", t2.value58)
+
+TextLabel.Size = UDim2.new(1, -40, 0, 30)
+TextLabel.Position = UDim2.new(0, 15, 0, 5)
+TextLabel.Text = "RECOMMENDED SETUP"
+TextLabel.TextColor3 = Color3.fromRGB(220, 220, 225)
+TextLabel.Font = Enum.Font.Arcade
+TextLabel.TextSize = 13
+TextLabel.BackgroundTransparency = 1
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+local TextLabel3 = Instance.new("TextLabel", t2.value58)
+
+TextLabel3.Size = UDim2.new(1, -30, 0, 90)
+TextLabel3.Position = UDim2.new(0, 15, 0, 40)
+TextLabel3.Text = "Mode: Legit\nAuto Wallhop: Always On\nFlick Degrees: 90\nFlick Speed: 0.05\n\nNote: The engine dynamically verifies global geometry structures automatically."
+TextLabel3.TextColor3 = Color3.fromRGB(180, 180, 185)
+TextLabel3.Font = Enum.Font.Arcade
+TextLabel3.TextSize = 11
+TextLabel3.BackgroundTransparency = 1
+TextLabel3.TextWrapped = true
+TextLabel3.TextYAlignment = Enum.TextYAlignment.Top
+TextLabel3.TextXAlignment = Enum.TextXAlignment.Left
+local TextButton10 = Instance.new("TextButton", t2.value58)
+
+TextButton10.Size = UDim2.new(1, -30, 0, 32)
+TextButton10.Position = UDim2.new(0, 15, 1, -42)
+TextButton10.BackgroundColor3 = Color3.fromRGB(40, 110, 75)
+TextButton10.Text = "APPLY FEATURE SET"
+TextButton10.TextColor3 = Color3.new(1, 1, 1)
+TextButton10.Font = Enum.Font.Arcade
+TextButton10.TextSize = 12
+Instance.new("UICorner", TextButton10).CornerRadius = UDim.new(0, 6)
+
+local function v46(p24)
+    local Frame4 = Instance.new("Frame", t2.value28)
+    Frame4.Size = UDim2.new(0, 380, 0, 220)
+    Frame4.Position = UDim2.new(0.5, -190, 0.4, -110)
+    Frame4.BackgroundColor3 = Color3.fromRGB(16, 16, 20)
+    Frame4.Active = true
+    Instance.new("UICorner", Frame4).CornerRadius = UDim.new(0, 10)
+    local UIStroke6 = Instance.new("UIStroke", Frame4)
+    UIStroke6.Color = Color3.fromRGB(255, 30, 30)
+    UIStroke6.Thickness = 3
+    UIStroke6.Transparency = 0.45
+    local UIStroke7 = Instance.new("UIStroke", Frame4)
+    UIStroke7.Color = Color3.fromRGB(255, 75, 75)
+    UIStroke7.Thickness = 1.5
+    local TextLabel4 = Instance.new("TextLabel", Frame4)
+    TextLabel4.Size = UDim2.new(1, -20, 0, 45)
+    TextLabel4.Position = UDim2.new(0, 10, 0, 8)
+    TextLabel4.Text = "TIPS"
+    TextLabel4.TextColor3 = Color3.fromRGB(255, 50, 50)
+    TextLabel4.Font = Enum.Font.Arcade
+    TextLabel4.TextSize = 15
+    TextLabel4.BackgroundTransparency = 1
+    TextLabel4.TextWrapped = true
+    local TextLabel5 = Instance.new("TextLabel", Frame4)
+    TextLabel5.Size = UDim2.new(1, -30, 0, 100)
+    TextLabel5.Position = UDim2.new(0, 15, 0, 60)
+    TextLabel5.Text = "[MINIMIZE TIP]: To open the GUI after clicking minimize, long press the bubble for 1.5 seconds. Thank you for using my script :D"
+    TextLabel5.TextColor3 = Color3.fromRGB(230, 230, 235)
+    TextLabel5.Font = Enum.Font.Arcade
+    TextLabel5.TextSize = 13
+    TextLabel5.BackgroundTransparency = 1
+    TextLabel5.TextWrapped = true
+    TextLabel5.TextYAlignment = Enum.TextYAlignment.Top
+    TextLabel5.TextXAlignment = Enum.TextXAlignment.Left
+    local TextButton11
+    local u164 = false
+    if p24 then
+        local Frame5 = Instance.new("Frame", Frame4)
+
+        Frame5.Size = UDim2.new(1, -30, 0, 24)
+        Frame5.Position = UDim2.new(0, 15, 1, -80)
+        Frame5.BackgroundTransparency = 1
+        TextButton11 = Instance.new("TextButton", Frame5)
+        TextButton11.Size = UDim2.new(0, 16, 0, 16)
+        TextButton11.Position = UDim2.new(0, 2, 0, 4)
+        TextButton11.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+        TextButton11.Text = ""
+        TextButton11.Font = Enum.Font.Arcade
+        TextButton11.TextSize = 12
+        TextButton11.TextColor3 = Color3.fromRGB(70, 240, 120)
+        Instance.new("UICorner", TextButton11).CornerRadius = UDim.new(0, 3)
+        Instance.new("UIStroke", TextButton11).Color = Color3.fromRGB(60, 60, 65)
+
+        local TextButton12 = Instance.new("TextButton", Frame5)
+
+        TextButton12.Size = UDim2.new(1, -25, 1, 0)
+        TextButton12.Position = UDim2.new(0, 25, 0, 0)
+        TextButton12.BackgroundTransparency = 1
+        TextButton12.Text = "Don't show this window again"
+        TextButton12.TextColor3 = Color3.fromRGB(160, 160, 165)
+        TextButton12.Font = Enum.Font.Arcade
+        TextButton12.TextSize = 11
+        TextButton12.TextXAlignment = Enum.TextXAlignment.Left
+
+        local function v167()
+            if not t2.value11 then
+                return
+            end
+
+            u164 = not u164
+            TextButton11.Text = not u164 and "" or "✓"
+
+            local v282 = TextButton11
+            local v283 = u164
+
+            if v283 then
+                v283 = Color3.fromRGB(25, 45, 30)
+            end
+
+            if not v283 then
+                v283 = Color3.fromRGB(30, 30, 35)
+            end
+
+            v282.BackgroundColor3 = v283
+        end
+
+        TextButton11.MouseButton1Click:Connect(v167)
+        TextButton12.MouseButton1Click:Connect(v167)
+    end
+    local TextButton13 = Instance.new("TextButton", Frame4)
+    TextButton13.Size = UDim2.new(1, -30, 0, 32)
+    TextButton13.Position = UDim2.new(0, 15, 1, -46)
+    TextButton13.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+    TextButton13.Text = "OK, I UNDERSTAND"
+    TextButton13.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton13.Font = Enum.Font.Arcade
+    TextButton13.TextSize = 12
+    Instance.new("UICorner", TextButton13).CornerRadius = UDim.new(0, 6)
+    Instance.new("UIStroke", TextButton13).Color = Color3.fromRGB(70, 70, 75)
+    TextButton13.MouseButton1Click:Connect(function()
+        local v284 = p24
+
+        if v284 then
+            v284 = u164 and t2.value25
+        end
+
+        if v284 then
+            pcall(function()
+                t2.value25("WallhopEngine/skip_tutorial.txt", "true")
+            end)
+        end
+
+        Frame4:Destroy()
+    end);
+    (function(p25, p26)
+        local u287 = false
+        local inputPosition
+        local p25Position
+        local u290
+        p26.InputBegan:Connect(function(input)
+            local v305 = input.UserInputType == Enum.UserInputType.MouseButton1
+
+            if not v305 then
+                v305 = input.UserInputType == Enum.UserInputType.Touch
+            end
+
+            if v305 and not t2.value17 then
+                u287 = true
+                inputPosition = input.Position
+                p25Position = p25.Position
+                u290 = input
+                local connection
+                connection = input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        u287 = false
+                        u290 = nil
+                        connection:Disconnect()
+                    end
+                end)
+            end
+        end)
+        t2.value2.InputChanged:Connect(function(input)
+            local v308 = u287
+
+            if v308 then
+                v308 = not t2.value17 and input == u290
+            end
+
+            if v308 then
+                local v309 = input.UserInputType == Enum.UserInputType.MouseMovement
+
+                if not v309 then
+                    v309 = input.UserInputType == Enum.UserInputType.Touch
+                end
+
+                if v309 then
+                    local v310 = input.Position - inputPosition
+
+                    p25.Position = UDim2.new(p25Position.X.Scale, p25Position.X.Offset + v310.X, p25Position.Y.Scale, p25Position.Y.Offset + v310.Y)
+                end
+            end
+        end)
+    end)(Frame4, TextLabel4)
+end
+t2.value59 = Instance.new("Frame", t2.value28)
+t2.value59.Size = UDim2.new(0, 360, 0, 180)
+t2.value59.Position = UDim2.new(0.5, -180, 0.4, -90)
+t2.value59.BackgroundColor3 = Color3.fromRGB(22, 16, 16)
+t2.value59.Visible = false
+t2.value59.Active = true
+Instance.new("UICorner", t2.value59).CornerRadius = UDim.new(0, 10)
+
+local UIStroke8 = Instance.new("UIStroke", t2.value59)
+
+UIStroke8.Color = Color3.fromRGB(240, 70, 70)
+UIStroke8.Thickness = 2
+local TextLabel6 = Instance.new("TextLabel", t2.value59)
+
+TextLabel6.Size = UDim2.new(1, -20, 0, 70)
+TextLabel6.Position = UDim2.new(0, 10, 0, 15)
+TextLabel6.Text = "ARE YOU SURE YOU WANT TO CLOSE?"
+TextLabel6.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel6.Font = Enum.Font.Arcade
+TextLabel6.TextSize = 22
+TextLabel6.TextWrapped = true
+TextLabel6.BackgroundTransparency = 1
+local TextButton14 = Instance.new("TextButton", t2.value59)
+
+TextButton14.Size = UDim2.new(0, 140, 0, 38)
+TextButton14.Position = UDim2.new(0, 25, 1, -55)
+TextButton14.BackgroundColor3 = Color3.fromRGB(140, 35, 35)
+TextButton14.Text = "CONFIRM"
+TextButton14.TextColor3 = Color3.new(1, 1, 1)
+TextButton14.Font = Enum.Font.Arcade
+TextButton14.TextSize = 14
+Instance.new("UICorner", TextButton14).CornerRadius = UDim.new(0, 6)
+Instance.new("UIStroke", TextButton14).Color = Color3.fromRGB(180, 50, 50)
+
+local TextButton15 = Instance.new("TextButton", t2.value59)
+
+TextButton15.Size = UDim2.new(0, 140, 0, 38)
+TextButton15.Position = UDim2.new(1, -165, 1, -55)
+TextButton15.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+TextButton15.Text = "CANCEL"
+TextButton15.TextColor3 = Color3.new(1, 1, 1)
+TextButton15.Font = Enum.Font.Arcade
+TextButton15.TextSize = 14
+Instance.new("UICorner", TextButton15).CornerRadius = UDim.new(0, 6)
+Instance.new("UIStroke", TextButton15).Color = Color3.fromRGB(75, 75, 80)
+TextButton3.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value59.Visible = true
+end)
+TextButton14.MouseButton1Click:Connect(function()
+    t2.value11 = false
+    t2.value14.whOn = false
+    t2.value14.camAutoWhOn = false
+    t2.value14.charAutoWhOn = false
+    t2.value14.camIjOn = false
+    t2.value14.charIjOn = false
+    t2.value14.camGfOn = false
+    t2.value14.charGfOn = false
+
+    if t2.value10 then
+        t2.value10.AutoRotate = true
+    end
+
+    t2.value53()
+
+    if t2.value54 then
+        t2.value54:Destroy()
+    end
+
+    pcall(function()
+        t2.value5:SetCore("SendNotification", {
+			Title = "Status",
+			Text = "Script Shutdown Complete",
+			Duration = 2
+		})
+    end)
+    t2.value28:Destroy()
+end)
+TextButton15.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return false
+    end
+
+    t2.value59.Visible = false
+end)
+
+local v51 = true
+local value24 = t2.value24
+if value24 then
+    value24 = t2.value27("WallhopEngine/skip_tutorial.txt")
+end
+if value24 then
+    local ok, result = pcall(function()
+        return t2.value24("WallhopEngine/skip_tutorial.txt")
+    end)
+
+    if ok then
+        ok = result == "true"
+    end
+
+    if ok then
+        v51 = false
+    end
+end
+if v51 then
+    v46(true)
+end
+TextButton6.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    v46(false)
+end)
+t2.value51.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value58.Visible = true
+    t2.value58.Position = UDim2.new(0.5, -150, 0.5, -100)
+end)
+TextButton9.MouseButton1Click:Connect(function()
+    t2.value58.Visible = false
+end)
+t2.value34.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value14.whOn = not t2.value14.whOn
+    t2.value57()
+end)
+t2.value37.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value14.method = t2.value14.method ~= "CAMERA" and "CAMERA" or "CHARACTER"
+    t2.value57()
+end)
+TextButton10.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value14.legit = true
+    t2.value14.camAutoWhOn = true
+
+    if t2.value14.method == "CAMERA" then
+        t2.value14.fDeg = 90
+        t2.value14.fSpd = 0.05
+    else
+        t2.value14.cDeg = 90
+        t2.value14.cSpd = 0.05
+    end
+
+    if not t2.value14.whOn and t2.value11 then
+        t2.value14.whOn = not t2.value14.whOn
+        t2.value57()
+    end
+
+    t2.value57()
+    t2.value58.Visible = false
+end)
+t2.value42.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value14.legit = not t2.value14.legit
+    t2.value57()
+end)
+t2.value45.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value14.flickDir = t2.value14.flickDir ~= "LEFT" and "LEFT" or "RIGHT"
+    t2.value57()
+end)
+
+local function v55(p27, p28, p29, p30)
+    if p28 then
+        p28.MouseButton1Click:Connect(function()
+            if not t2.value11 then
+                return
+            end
+
+            local v291 = p27 ~= "CAMERA" and "charAutoWhOn" or "camAutoWhOn"
+            local v292 = t2.value14[v291]
+
+            t2.value14[v291] = not v292
+            t2.value57()
+        end)
+    end
+
+    p29.MouseButton1Click:Connect(function()
+        if not t2.value11 then
+            return
+        end
+
+        local v293 = p27 ~= "CAMERA" and "charIjOn" or "camIjOn"
+        local v294 = t2.value14[v293]
+
+        t2.value14[v293] = not v294
+        t2.value57()
+    end)
+    p30.MouseButton1Click:Connect(function()
+        if not t2.value11 then
+            return
+        end
+
+        local v295 = p27 ~= "CAMERA" and "charGfOn" or "camGfOn"
+        local v296 = t2.value14[v295]
+
+        t2.value14[v295] = not v296
+        t2.value57()
+    end)
+end
+v55("CAMERA", nil, t2.value43, t2.value44)
+v55("CHARACTER", t2.value46, t2.value47, t2.value48)
+t2.value33.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value17 = not t2.value17
+    t2.value33.Text = not t2.value17 and "🔓" or "🔒"
+
+    local value33 = t2.value33
+    local value17 = t2.value17
+
+    if value17 then
+        value17 = Color3.fromRGB(255, 180, 0)
+    end
+
+    if not value17 then
+        value17 = Color3.fromRGB(200, 200, 200)
+    end
+
+    value33.TextColor3 = value17
+end)
+TextButton.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    t2.value31.Visible = false
+    t2.value35.Visible = true
+    t2.value35.Position = UDim2.new(t2.value31.Position.X.Scale, t2.value31.Position.X.Offset + 215, t2.value31.Position.Y.Scale, t2.value31.Position.Y.Offset + 160)
+    t2.value35.Size = UDim2.new(0, 55, 0, 55)
+end)
+t2.value60 = nil
+t2.value61 = false
+t2.value62 = Vector2.new(0, 0)
+t2.value35.InputBegan:Connect(function(input)
+    if not t2.value11 then
+        return
+    end
+
+    local v176 = input.UserInputType == Enum.UserInputType.MouseButton1
+
+    if not v176 then
+        v176 = input.UserInputType == Enum.UserInputType.Touch
+    end
+
+    if v176 then
+        t2.value61 = true
+        t2.value62 = Vector2.new(input.Position.X, input.Position.Y)
+        t2.value60 = task.delay(1.5, function()
+            if t2.value61 and t2.value11 then
+                t2.value61 = false
+                t2.value31.Position = UDim2.new(0.5, -t2.value13.X / 2, 0.25, -t2.value13.Y / 2)
+                t2.value31.Size = UDim2.new(0, t2.value13.X, 0, t2.value13.Y)
+                t2.value31.Visible = true
+                t2.value35.Visible = false
+            end
+        end)
+    end
+end)
+t2.value35.InputEnded:Connect(function(input)
+    if not t2.value11 then
+        return
+    end
+
+    local v178 = input.UserInputType == Enum.UserInputType.MouseButton1
+
+    if not v178 then
+        v178 = input.UserInputType == Enum.UserInputType.Touch
+    end
+
+    if v178 and t2.value61 then
+        if t2.value60 then
+            task.cancel(t2.value60)
+        end
+
+        if (Vector2.new(input.Position.X, input.Position.Y) - t2.value62).Magnitude < 15 then
+            if not t2.value11 then
+                return
+            end
+
+            t2.value14.whOn = not t2.value14.whOn
+            t2.value57()
+        end
+    end
+end)
+t2.value2.InputBegan:Connect(function(input, gameProcessed)
+    if not t2.value11 or gameProcessed then
+        return
+    end
+
+    local v181 = input.KeyCode == Enum.KeyCode.RightControl
+
+    if v181 then
+        v181 = not t2.value31.Visible
+    end
+
+    if v181 then
+        t2.value31.Visible = true
+        t2.value35.Visible = false
+    end
+end)
+
+local Frame6 = Instance.new("Frame", t2.value32)
+
+Frame6.Size = UDim2.new(0, 1, 1, -20)
+Frame6.Position = UDim2.new(0, 0, 0, 10)
+Frame6.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+
+local TextLabel7 = Instance.new("TextLabel", t2.value32)
+
+TextLabel7.Size = UDim2.new(1, -20, 0, 32)
+TextLabel7.Position = UDim2.new(0, 15, 0, 4)
+TextLabel7.BackgroundTransparency = 1
+TextLabel7.Text = "CONFIG MANAGER"
+TextLabel7.TextColor3 = Color3.fromRGB(180, 180, 190)
+TextLabel7.TextSize = 14
+TextLabel7.Font = Enum.Font.Arcade
+t2.value63 = Instance.new("TextBox", t2.value32)
+t2.value63.Size = UDim2.new(1, -30, 0, 28)
+t2.value63.Position = UDim2.new(0, 15, 0, 36)
+t2.value63.BackgroundColor3 = Color3.fromRGB(24, 24, 28)
+t2.value63.Text = ""
+t2.value63.PlaceholderText = "Search Config..."
+t2.value63.Font = Enum.Font.Arcade
+t2.value63.TextSize = 11
+t2.value63.TextColor3 = Color3.new(1, 1, 1)
+Instance.new("UICorner", t2.value63).CornerRadius = UDim.new(0, 5)
+Instance.new("UIStroke", t2.value63).Color = Color3.fromRGB(45, 45, 50)
+t2.value64 = Instance.new("ScrollingFrame", t2.value32)
+t2.value64.Size = UDim2.new(1, -30, 0, 170)
+t2.value64.Position = UDim2.new(0, 15, 0, 72)
+t2.value64.BackgroundTransparency = 1
+t2.value64.CanvasSize = UDim2.new(0, 0, 0, 0)
+t2.value64.ScrollBarThickness = 3
+t2.value64.ScrollBarImageColor3 = Color3.fromRGB(80, 80, 90)
+Instance.new("UIListLayout", t2.value64).Padding = UDim.new(0, 4)
+t2.value65 = Instance.new("TextBox", t2.value32)
+t2.value65.Size = UDim2.new(1, -30, 0, 28)
+t2.value65.Position = UDim2.new(0, 15, 0, 255)
+t2.value65.BackgroundColor3 = Color3.fromRGB(24, 24, 28)
+t2.value65.Text = ""
+t2.value65.PlaceholderText = "Config Name..."
+t2.value65.Font = Enum.Font.Arcade
+t2.value65.TextSize = 11
+t2.value65.TextColor3 = Color3.new(1, 1, 1)
+Instance.new("UICorner", t2.value65).CornerRadius = UDim.new(0, 5)
+Instance.new("UIStroke", t2.value65).Color = Color3.fromRGB(45, 45, 50)
+
+local function v58(p31, p32, p33, p34, p35, p36)
+    local TextButton16 = Instance.new("TextButton", t2.value32)
+
+    TextButton16.Size = UDim2.new(0, p33, 0, p34)
+    TextButton16.Position = UDim2.new(0, p31, 0, p32)
+    TextButton16.BackgroundColor3 = p36
+    TextButton16.Text = p35
+    TextButton16.TextColor3 = Color3.new(1, 1, 1)
+    TextButton16.TextSize = 11
+    TextButton16.Font = Enum.Font.Arcade
+    Instance.new("UICorner", TextButton16).CornerRadius = UDim.new(0, 5)
+
+    return TextButton16
+end
+local v59 = v58(15, 295, 50, 32, "LOAD", Color3.fromRGB(35, 75, 135))
+
+t2.value66 = v58(71, 295, 50, 32, "A-LD", Color3.fromRGB(40, 40, 45))
+
+local v60 = v58(130, 295, 105, 32, "SAVE/NEW", Color3.fromRGB(40, 110, 75))
+local v61 = v58(15, 335, 105, 32, "OVERWRITE", Color3.fromRGB(110, 80, 35))
+local v62 = v58(130, 335, 105, 32, "DELETE", Color3.fromRGB(140, 45, 55))
+
+Instance.new("UIStroke", t2.value66).Color = Color3.fromRGB(55, 55, 60)
+t2.value67 = {};
+(function()
+    local v189 = not t2.value24
+
+    if not v189 then
+        v189 = not t2.value27("WallhopEngine/autoload_config.txt")
+    end
+
+    if v189 then
+        return
+    end
+
+    local ok, result = pcall(function()
+        return t2.value24("WallhopEngine/autoload_config.txt")
+    end)
+
+    if ok then
+        ok = result and result ~= ""
+    end
+
+    if ok then
+        t2.value19 = result
+    end
+end)()
+function t2.value68()
+    if t2.value18 ~= "" and t2.value18 == t2.value19 then
+        t2.value66.BackgroundColor3 = Color3.fromRGB(40, 110, 75)
+        t2.value66.Text = "A-ON"
+
+        return
+    end
+
+    t2.value66.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+    t2.value66.Text = "A-LD"
+end
+t2.value69 = nil
+function t2.value69()
+    if not t2.value11 then
+        return
+    end
+    for v194, v195 in ipairs(t2.value67) do
+
+        v195:Destroy()
+    end
+    table.clear(t2.value67)
+    if not t2.value23 then
+        return
+    end
+    local v196 = string.lower(t2.value63.Text)
+    local ok, result = pcall(function()
+        return t2.value23("WallhopEngine")
+    end)
+    local v199 = not ok
+    if not v199 then
+        v199 = type(result) ~= "table"
+    end
+    if v199 then
+        return
+    end
+    local n1 = 0
+    for _, v in ipairs(result) do
+        local v203 = string.match(v, "([^/\\]+)$") or v
+
+        if string.sub(v203, -5) == ".json" then
+            local v204 = string.sub(v203, 1, -6)
+            local v205 = v196 == ""
+
+            if not v205 then
+                v205 = string.find(string.lower(v204), v196, 1, true)
+            end
+
+            if v205 then
+                n1 += 1
+
+                local TextButton17 = Instance.new("TextButton", t2.value64)
+
+                TextButton17.Size = UDim2.new(1, -5, 0, 24)
+                TextButton17.Text = v204 == t2.value19 and "[A] " .. v204 or v204
+                TextButton17.Font = Enum.Font.Arcade
+                TextButton17.TextSize = 11
+
+                local v207 = v204 == t2.value18
+
+                if v207 then
+                    v207 = Color3.fromRGB(70, 240, 120)
+                end
+
+                if not v207 then
+                    v207 = Color3.fromRGB(200, 200, 200)
+                end
+
+                TextButton17.TextColor3 = v207
+
+                local v208 = v204 == t2.value18
+
+                if v208 then
+                    v208 = Color3.fromRGB(20, 20, 24)
+                end
+
+                if not v208 then
+                    v208 = Color3.fromRGB(20, 20, 24)
+                end
+
+                TextButton17.BackgroundColor3 = v208
+                Instance.new("UICorner", TextButton17).CornerRadius = UDim.new(0, 4)
+
+                local UIStroke9 = Instance.new("UIStroke", TextButton17)
+                local v210 = v204 == t2.value18
+
+                if v210 then
+                    v210 = Color3.fromRGB(60, 150, 90)
+                end
+
+                if not v210 then
+                    v210 = Color3.fromRGB(35, 35, 40)
+                end
+
+                UIStroke9.Color = v210
+                TextButton17.MouseButton1Click:Connect(function()
+                    if not t2.value11 then
+                        return
+                    end
+
+                    t2.value18 = v204
+                    t2.value65.Text = v204
+                    t2.value68()
+                    t2.value69()
+                end)
+                table.insert(t2.value67, TextButton17)
+            end
+        end
+    end
+    t2.value64.CanvasSize = UDim2.new(0, 0, 0, n1 * 28)
+end
+t2.value63:GetPropertyChangedSignal("Text"):Connect(t2.value69)
+
+local function v63(p37)
+    local v212 = not t2.value24
+
+    if not v212 then
+        v212 = not t2.value11
+    end
+
+    if v212 then
+        return
+    end
+
+    local v213 = "WallhopEngine/" .. p37 .. ".json"
+
+    if not t2.value27(v213) then
+        return
+    end
+
+    local ok, result = pcall(function()
+        return t2.value24(v213)
+    end)
+    local v216 = result
+
+    if ok and v216 then
+        local ok2, result2 = pcall(function()
+            return t2.value4:JSONDecode(v216)
+        end)
+
+        if ok2 then
+            ok2 = type(result2) == "table"
+        end
+
+        if ok2 then
+            for k, v in pairs(result2) do
+                local v221 = k
+
+                if v221 == "autoWhOn" then
+                    rawset(t2.value14, "charAutoWhOn", v)
+                elseif v221 == "ijOn" then
+                    rawset(t2.value14, "camIjOn", v)
+                    rawset(t2.value14, "charIjOn", v)
+                elseif v221 == "gfOn" then
+                    rawset(t2.value14, "camGfOn", v)
+                    rawset(t2.value14, "charGfOn", v)
+                else
+                    t2.value14[v221] = v
+                end
+            end
+
+            t2.value14.camAutoWhOn = true
+            t2.value57()
+        end
+    end
+end
+TextButton5.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    for k, v in pairs(t2.value12) do
+        t2.value14[k] = v
+    end
+
+    t2.value18 = ""
+    t2.value65.Text = ""
+    t2.value68()
+    t2.value57()
+    t2.value69()
+end)
+v60.MouseButton1Click:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    local v224 = t2.value65.Text:gsub("[%s/\\?%*<>|:\"']", "")
+
+    if v224 == "" or not t2.value25 then
+        return
+    end
+
+    t2.value25("WallhopEngine/" .. v224 .. ".json", t2.value4:JSONEncode(t2.value14))
+    t2.value18 = v224
+    t2.value68()
+    t2.value69()
+end)
+v59.MouseButton1Click:Connect(function()
+    local v225 = not t2.value11
+
+    if not v225 then
+        v225 = t2.value18 == ""
+    end
+
+    if v225 then
+        return
+    end
+
+    local value18 = t2.value18
+
+    v63(value18)
+end)
+t2.value66.MouseButton1Click:Connect(function()
+    local v227 = not t2.value11
+
+    if not v227 then
+        v227 = t2.value18 == "" or not t2.value25
+    end
+
+    if v227 then
+        return
+    end
+
+    if t2.value19 == t2.value18 then
+        t2.value19 = ""
+        pcall(function()
+            t2.value25("WallhopEngine/autoload_config.txt", "")
+        end)
+    else
+        t2.value19 = t2.value18
+        pcall(function()
+            t2.value25("WallhopEngine/autoload_config.txt", t2.value18)
+        end)
+    end
+
+    t2.value68()
+    t2.value69()
+end)
+v61.MouseButton1Click:Connect(function()
+    local v228 = not t2.value11
+
+    if not v228 then
+        v228 = t2.value18 == "" or not t2.value25
+    end
+
+    if v228 then
+        return
+    end
+
+    t2.value25("WallhopEngine/" .. t2.value18 .. ".json", t2.value4:JSONEncode(t2.value14))
+end)
+v62.MouseButton1Click:Connect(function()
+    local v229 = not t2.value11
+
+    if not v229 then
+        v229 = t2.value18 == "" or not t2.value26
+    end
+
+    if v229 then
+        return
+    end
+
+    pcall(function()
+        t2.value26("WallhopEngine/" .. t2.value18 .. ".json")
+    end)
+
+    if t2.value19 == t2.value18 then
+        t2.value19 = ""
+        pcall(function()
+            t2.value25("WallhopEngine/autoload_config.txt", "")
+        end)
+    end
+
+    t2.value18 = ""
+    t2.value65.Text = ""
+    t2.value68()
+    t2.value69()
+end)
+
+if t2.value19 ~= "" then
+    t2.value65.Text = t2.value19
+    t1.value5 = t2.value19
+    v63(t1.value5)
+    t2.value68()
+end
+t2.value69()
+local function v64(p38, p39)
+    local u232 = false
+    local inputPosition
+    local p38Position
+    local u235
+    p39.InputBegan:Connect(function(input)
+        local v298 = input.UserInputType == Enum.UserInputType.MouseButton1
+
+        if not v298 then
+            v298 = input.UserInputType == Enum.UserInputType.Touch
+        end
+
+        if v298 then
+            v298 = not t2.value17 and t2.value11
+        end
+
+        if v298 then
+            u232 = true
+            inputPosition = input.Position
+            p38Position = p38.Position
+            u235 = input
+            local connection
+            connection = input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    u232 = false
+                    u235 = nil
+                    connection:Disconnect()
+                end
+            end)
+        end
+    end)
+    t2.value2.InputChanged:Connect(function(input)
+        local v301 = u232
+
+        if v301 then
+            v301 = not t2.value17
+
+            if v301 then
+                v301 = input == u235 and t2.value11
+            end
+        end
+
+        if v301 then
+            local v302 = input.UserInputType == Enum.UserInputType.MouseMovement
+
+            if not v302 then
+                v302 = input.UserInputType == Enum.UserInputType.Touch
+            end
+
+            if v302 then
+                local v303 = input.Position - inputPosition
+
+                p38.Position = UDim2.new(p38Position.X.Scale, p38Position.X.Offset + v303.X, p38Position.Y.Scale, p38Position.Y.Offset + v303.Y)
+            end
+        end
+    end)
+end
+v64(t2.value31, t2.value31)
+v64(t2.value35, t2.value35)
+v64(t2.value58, TextLabel)
+v64(t2.value59, TextLabel6)
+
+function t1.value5()
+    local v236 = not t2.value11
+
+    if not v236 then
+        v236 = not t2.value9 or not t2.value10
+    end
+
+    if v236 then
+        return
+    end
+
+    local CurrentCamera = workspace.CurrentCamera
+
+    if not CurrentCamera then
+        return
+    end
+
+    local AutoRotate = t2.value10.AutoRotate
+
+    t2.value10.AutoRotate = false
+
+    local fDeg2 = t2.value14.fDeg
+
+    if t2.value14.flickDir == "RIGHT" then
+        fDeg2 = -fDeg2
+    end
+
+    local CurrentCameraCFrame = CurrentCamera.CFrame
+    local v241 = math.rad(fDeg2)
+    local v242 = CurrentCameraCFrame * CFrame.Angles(0, v241, 0)
+
+    if t2.value14.legit then
+        local timestamp = tick()
+
+        while tick() - timestamp < t2.value14.fSpd and t2.value11 do
+            CurrentCamera.CFrame = CurrentCameraCFrame:Lerp(v242, (tick() - timestamp) / t2.value14.fSpd * 0.7)
+            t2.value3.Heartbeat:Wait()
+        end
+
+        local timestamp2 = tick()
+
+        while tick() - timestamp2 < 0.12 and t2.value11 do
+            CurrentCamera.CFrame = v242:Lerp(CurrentCameraCFrame, (tick() - timestamp2) / 0.12 * 0.9)
+            t2.value3.Heartbeat:Wait()
+        end
+
+        if t2.value11 then
+            CurrentCamera.CFrame = CurrentCameraCFrame
+        end
+    else
+        CurrentCamera.CFrame = v242
+        task.wait(0.04)
+
+        if t2.value11 then
+            CurrentCamera.CFrame = CurrentCameraCFrame
+        end
+    end
+
+    t2.value10.AutoRotate = AutoRotate
+end
+t2.value70 = t1.value5
+local function v65()
+    if not t2.value11 then
+        return
+    end
+
+    if t2.value14.method == "CAMERA" then
+        task.spawn(t2.value70)
+
+        return
+    end
+
+    local cDeg2 = t2.value14.cDeg
+
+    t2.value9.CFrame = t2.value9.CFrame * CFrame.Angles(0, math.rad(-cDeg2), 0)
+    task.wait(t2.value14.cSpd)
+
+    if t2.value11 and t2.value9 then
+        t2.value9.CFrame = t2.value9.CFrame * CFrame.Angles(0, math.rad(cDeg2), 0)
+    end
+end
+function t2.value71()
+    local v245 = not t2.value9
+
+    if not v245 then
+        v245 = not t2.value8 or not t2.value10
+    end
+
+    if v245 then
+        return nil
+    end
+
+    if t2.value10:GetState() == Enum.HumanoidStateType.Climbing then
+        return nil
+    end
+
+    local raycastParams = RaycastParams.new()
+
+    raycastParams.FilterDescendantsInstances = {
+		t2.value8,
+		t2.value54
+	}
+    raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+
+    local v247 = t2.value10.MoveDirection.Magnitude > 0
+
+    if v247 then
+        v247 = t2.value10.MoveDirection.Unit
+    end
+
+    if not v247 then
+        v247 = t2.value9.CFrame.LookVector.Unit
+    end
+
+    local Unit = Vector3.new(v247.X, 0, v247.Z).Unit
+    local v249 = t2.value9.Position + Vector3.new(0, 1.5, 0)
+    local v250 = t2.value9.Position - Vector3.new(0, 1.5, 0)
+    local raycastResult = workspace:Raycast(v249, Unit * 3.5, raycastParams)
+    local raycastResult2 = workspace:Raycast(v250, Unit * 3.5, raycastParams)
+
+    if raycastResult or raycastResult2 then
+        local v253 = raycastResult and raycastResult.Instance
+
+        if not v253 then
+            v253 = raycastResult2 and raycastResult2.Instance
+        end
+
+        if v253 and t2.value52(v253) then
+            if not (raycastResult and raycastResult2) then
+                return raycastResult2 or raycastResult
+            end
+
+            if raycastResult.Instance ~= raycastResult2.Instance then
+                return raycastResult2 or raycastResult
+            end
+        end
+    end
+
+    return nil
+end
+t2.value2.JumpRequest:Connect(function()
+    local v255 = not t2.value11
+
+    if not v255 then
+        v255 = not t2.value14.whOn
+
+        if not v255 then
+            v255 = t2.value14.method == "CAMERA"
+        end
+    end
+
+    if v255 then
+        return
+    end
+
+    if not t2.value9 or not t2.value10 then
+        return
+    end
+
+    local v256 = t2.value71()
+
+    if v256 then
+        v256 = t2.value20 and t2.value11
+    end
+
+    if v256 then
+        t2.value10:ChangeState(Enum.HumanoidStateType.Jumping)
+        v65()
+    end
+end)
+t2.value3.PreSimulation:Connect(function()
+    if not t2.value11 then
+        return
+    end
+
+    local v257 = not t2.value10
+
+    if not v257 then
+        v257 = not t2.value9 or not t2.value8
+    end
+
+    if v257 then
+        return
+    end
+
+    local v258 = t2.value14.method == "CAMERA"
+
+    if v258 then
+        v258 = t2.value14.camIjOn
+    end
+
+    if not v258 then
+        v258 = t2.value14.charIjOn
+    end
+
+    local Jump = t2.value10.Jump
+
+    if Jump then
+        if v258 then
+            v258 = t2.value10.FloorMaterial == Enum.Material.Air
+        end
+
+        Jump = v258
+    end
+
+    if Jump and t2.value10:GetState() ~= Enum.HumanoidStateType.Climbing then
+        t2.value10:ChangeState(Enum.HumanoidStateType.Jumping)
+        t2.value9.Velocity = Vector3.new(t2.value9.Velocity.X * 1.05, 46, t2.value9.Velocity.Z)
+    end
+
+    t2.value55()
+
+    local v260 = t2.value71()
+    local v261 = t2.value14.method == "CAMERA"
+
+    if v261 then
+        v261 = t2.value14.camAutoWhOn
+    end
+
+    if not v261 then
+        v261 = t2.value14.method == "CHARACTER"
+
+        if v261 then
+            v261 = t2.value14.charAutoWhOn
+        end
+    end
+
+    local whOn5 = t2.value14.whOn
+
+    if whOn5 then
+        if v261 then
+            v261 = t2.value10.FloorMaterial == Enum.Material.Air
+        end
+
+        whOn5 = v261
+    end
+
+    if whOn5 and v260 then
+        t2.value10:ChangeState(Enum.HumanoidStateType.Jumping)
+        t2.value9.Velocity = Vector3.new(t2.value9.Velocity.X, 48, t2.value9.Velocity.Z)
+        v65()
+    end
+
+    local v263 = t2.value14.method == "CAMERA"
+
+    if v263 then
+        v263 = t2.value14.camGfOn
+    end
+
+    if not v263 then
+        v263 = t2.value14.charGfOn
+    end
+
+    if v263 then
+        local raycastParams = RaycastParams.new()
+        raycastParams.FilterDescendantsInstances = {
+			t2.value8,
+			t2.value54
+		}
+        raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+        local v265 = t2.value10.MoveDirection.Magnitude > 0
+        if v265 then
+            v265 = t2.value10.MoveDirection.Unit
+        end
+        if not v265 then
+            v265 = t2.value9.CFrame.LookVector.Unit
+        end
+        if t2.value10.MoveDirection:Dot(t2.value9.CFrame.LookVector) < 0 then
+            v265 = -t2.value9.CFrame.LookVector.Unit
+        end
+        local raycastResult = workspace:Raycast(t2.value9.Position, Vector3.new(0, -6, 0), raycastParams)
+        local raycastResult3 = workspace:Raycast(t2.value9.Position + v265 * 1.2, Vector3.new(0, -6, 0), raycastParams)
+        local Instance2
+        local v269 = raycastResult
+        if raycastResult then
+            v269 = t2.value52(raycastResult.Instance)
+        end
+        if v269 then
+            Instance2 = raycastResult.Instance
+        else
+            local v270 = raycastResult3
+
+            if raycastResult3 then
+                v270 = t2.value52(raycastResult3.Instance)
+            end
+
+            if v270 then
+                Instance2 = raycastResult3.Instance
+            end
+        end
+        if Instance2 then
+            local v271 = Instance2.Position.Y + Instance2.Size.Y / 2
+            local v272 = t2.value14.method == "CAMERA"
+
+            if v272 then
+                v272 = t2.value14.gExt
+            end
+
+            if not v272 then
+                v272 = t2.value14.cGExt
+            end
+
+            local v273 = math.clamp(v272 * 3, 2, 40)
+
+            t2.value54.Size = Vector3.new(v273, 0.4, v273)
+            t2.value54.Position = Vector3.new(t2.value9.Position.X, v271 - 0.2, t2.value9.Position.Z)
+            t2.value54.Parent = workspace
+
+            return
+        end
+        if t2.value54.Parent then
+            t2.value54.Parent = nil
+
+            return
+        end
+    elseif t2.value54.Parent then
+        t2.value54.Parent = nil
+    end
+end)
+t2.value57()
