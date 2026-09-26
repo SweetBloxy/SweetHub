@@ -1,0 +1,1754 @@
+--// 💫 SweetHub • Rivals
+--// ALL-IN-ONE MOBILE EDITION
+--// Aimbot + ESP + FOV + Distance + Shortcuts + Notifications
+--// Icon: 126926408102660
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+--==================================================
+-- CLEANUP
+--==================================================
+
+pcall(function()
+	RunService:UnbindFromRenderStep("SweetHub_Aimbot")
+end)
+
+local Old = PlayerGui:FindFirstChild("SweetHub_Rivals")
+if Old then
+	Old:Destroy()
+end
+
+--==================================================
+-- COLORS
+--==================================================
+
+local C = {
+	BLACK = Color3.fromRGB(7, 8, 10),
+	BG = Color3.fromRGB(12, 13, 17),
+	SURFACE = Color3.fromRGB(19, 20, 26),
+	SURFACE2 = Color3.fromRGB(25, 26, 33),
+	SURFACE3 = Color3.fromRGB(32, 33, 41),
+
+	WHITE = Color3.fromRGB(235, 235, 240),
+	SUB = Color3.fromRGB(150, 153, 165),
+
+	ACCENT = Color3.fromRGB(130, 170, 255),
+	GREEN = Color3.fromRGB(80, 220, 125),
+	RED = Color3.fromRGB(255, 80, 90),
+	YELLOW = Color3.fromRGB(255, 205, 80)
+}
+
+--==================================================
+-- SETTINGS
+--==================================================
+
+local AIMBOT_ENABLED = false
+local STRONG_LOCK = false
+local WALLCHECK = true
+
+local AIM_PART = "Head"
+
+local FOV_RADIUS = 33
+local AIMBOT_DISTANCE = 100
+
+local AIM_SMOOTHNESS = 0.16
+
+local ESP_ENABLED = false
+local ESP_DISTANCE = 500
+
+local CURRENT_TARGET = nil
+local EXCLUDED = {}
+
+--==================================================
+-- HELPERS
+--==================================================
+
+local function Tween(obj, time, props)
+	return TweenService:Create(
+		obj,
+		TweenInfo.new(
+			time,
+			Enum.EasingStyle.Quint,
+			Enum.EasingDirection.Out
+		),
+		props
+	)
+end
+
+local function Corner(obj, radius)
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(0, radius or 8)
+	c.Parent = obj
+	return c
+end
+
+local function Stroke(obj, color, thickness, transparency)
+	local s = Instance.new("UIStroke")
+	s.Color = color or C.SURFACE3
+	s.Thickness = thickness or 1
+	s.Transparency = transparency or 0
+	s.Parent = obj
+	return s
+end
+
+local function GetCharacter(player)
+	if not player then
+		return nil
+	end
+
+	local character = player.Character
+	if not character then
+		return nil
+	end
+
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	local root = character:FindFirstChild("HumanoidRootPart")
+
+	if not humanoid or not root or humanoid.Health <= 0 then
+		return nil
+	end
+
+	return character
+end
+
+local function IsExcluded(player)
+	return EXCLUDED[player] == true
+end
+
+--==================================================
+-- GUI
+--==================================================
+
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "SweetHub_Rivals"
+Gui.ResetOnSpawn = false
+Gui.IgnoreGuiInset = true
+
+--// ABOVE NORMAL IN-GAME UI
+Gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+Gui.DisplayOrder = 999999
+
+Gui.Parent = PlayerGui
+
+--==================================================
+-- MAIN WINDOW
+--==================================================
+
+local Main = Instance.new("Frame")
+Main.Name = "Main"
+Main.Size = UDim2.fromOffset(420, 300)
+Main.Position = UDim2.new(0.5, -210, 0.5, -150)
+Main.BackgroundColor3 = C.BG
+Main.BorderSizePixel = 0
+Main.Visible = false
+Main.ZIndex = 10
+Main.Parent = Gui
+
+Corner(Main, 14)
+Stroke(Main, C.SURFACE3, 1, 0.25)
+
+local Background = Instance.new("ImageLabel")
+Background.Size = UDim2.fromScale(1, 1)
+Background.BackgroundTransparency = 1
+Background.Image = "rbxassetid://99317971916804"
+Background.ImageTransparency = 0.94
+Background.ScaleType = Enum.ScaleType.Crop
+Background.ZIndex = 10
+Background.Parent = Main
+
+Corner(Background, 14)
+
+--==================================================
+-- HEADER
+--==================================================
+
+local Header = Instance.new("Frame")
+Header.Size = UDim2.new(1, 0, 0, 55)
+Header.BackgroundTransparency = 1
+Header.ZIndex = 11
+Header.Parent = Main
+
+local Title = Instance.new("TextLabel")
+Title.BackgroundTransparency = 1
+Title.Position = UDim2.fromOffset(18, 8)
+Title.Size = UDim2.fromOffset(250, 24)
+Title.Font = Enum.Font.GothamBold
+Title.Text = "SweetHub"
+Title.TextSize = 19
+Title.TextColor3 = C.WHITE
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.ZIndex = 12
+Title.Parent = Header
+
+local Subtitle = Instance.new("TextLabel")
+Subtitle.BackgroundTransparency = 1
+Subtitle.Position = UDim2.fromOffset(19, 31)
+Subtitle.Size = UDim2.fromOffset(200, 17)
+Subtitle.Font = Enum.Font.Gotham
+Subtitle.Text = "• Rivals"
+Subtitle.TextSize = 11
+Subtitle.TextColor3 = C.SUB
+Subtitle.TextXAlignment = Enum.TextXAlignment.Left
+Subtitle.ZIndex = 12
+Subtitle.Parent = Header
+
+local Close = Instance.new("TextButton")
+Close.Size = UDim2.fromOffset(30, 30)
+Close.Position = UDim2.new(1, -41, 0, 12)
+Close.BackgroundColor3 = C.SURFACE2
+Close.Text = "×"
+Close.TextSize = 19
+Close.Font = Enum.Font.GothamMedium
+Close.TextColor3 = C.SUB
+Close.AutoButtonColor = false
+Close.ZIndex = 12
+Close.Parent = Header
+
+Corner(Close, 8)
+
+--==================================================
+-- CONTENT
+--==================================================
+
+local Content = Instance.new("Frame")
+Content.Position = UDim2.fromOffset(14, 61)
+Content.Size = UDim2.new(1, -28, 1, -69)
+Content.BackgroundTransparency = 1
+Content.ZIndex = 11
+Content.Parent = Main
+
+local function CreateButton(text, x, y, width)
+	local b = Instance.new("TextButton")
+	b.Size = UDim2.fromOffset(width or 182, 35)
+	b.Position = UDim2.fromOffset(x, y)
+	b.BackgroundColor3 = C.SURFACE
+	b.Text = text
+	b.TextSize = 12
+	b.Font = Enum.Font.GothamMedium
+	b.TextColor3 = C.SUB
+	b.AutoButtonColor = false
+	b.ZIndex = 12
+	b.Parent = Content
+
+	Corner(b, 8)
+	Stroke(b, C.SURFACE3, 1, 0.35)
+
+	return b
+end
+
+local function SetButton(button, enabled)
+	Tween(button, 0.14, {
+		BackgroundColor3 = enabled and C.GREEN or C.SURFACE,
+		TextColor3 = enabled and C.BLACK or C.SUB
+	}):Play()
+end
+
+--==================================================
+-- MAIN CONTROLS
+--==================================================
+
+local AimbotButton = CreateButton("Aimbot  [Q]", 0, 0)
+local StrongButton = CreateButton("Strong Lock", 192, 0)
+
+local WallButton = CreateButton("Wallcheck", 0, 42)
+local AimPartButton = CreateButton("Aim: Head", 192, 42)
+
+--==================================================
+-- FOV
+--==================================================
+
+local FOVLabel = Instance.new("TextLabel")
+FOVLabel.BackgroundTransparency = 1
+FOVLabel.Position = UDim2.fromOffset(0, 84)
+FOVLabel.Size = UDim2.fromOffset(182, 17)
+FOVLabel.Font = Enum.Font.GothamMedium
+FOVLabel.Text = "FOV Radius"
+FOVLabel.TextSize = 11
+FOVLabel.TextColor3 = C.SUB
+FOVLabel.TextXAlignment = Enum.TextXAlignment.Left
+FOVLabel.ZIndex = 12
+FOVLabel.Parent = Content
+
+local FOVBox = Instance.new("TextBox")
+FOVBox.Size = UDim2.fromOffset(182, 32)
+FOVBox.Position = UDim2.fromOffset(0, 103)
+FOVBox.BackgroundColor3 = C.SURFACE
+FOVBox.Text = tostring(FOV_RADIUS)
+FOVBox.TextSize = 12
+FOVBox.Font = Enum.Font.GothamMedium
+FOVBox.TextColor3 = C.WHITE
+FOVBox.ClearTextOnFocus = false
+FOVBox.ZIndex = 12
+FOVBox.Parent = Content
+
+Corner(FOVBox, 8)
+Stroke(FOVBox, C.SURFACE3, 1, 0.35)
+
+--==================================================
+-- AIMBOT DISTANCE
+--==================================================
+
+local DistanceLabel = Instance.new("TextLabel")
+DistanceLabel.BackgroundTransparency = 1
+DistanceLabel.Position = UDim2.fromOffset(192, 84)
+DistanceLabel.Size = UDim2.fromOffset(182, 17)
+DistanceLabel.Font = Enum.Font.GothamMedium
+DistanceLabel.Text = "Aimbot Distance"
+DistanceLabel.TextSize = 11
+DistanceLabel.TextColor3 = C.SUB
+DistanceLabel.TextXAlignment = Enum.TextXAlignment.Left
+DistanceLabel.ZIndex = 12
+DistanceLabel.Parent = Content
+
+local DistanceBox = Instance.new("TextBox")
+DistanceBox.Size = UDim2.fromOffset(182, 32)
+DistanceBox.Position = UDim2.fromOffset(192, 103)
+DistanceBox.BackgroundColor3 = C.SURFACE
+DistanceBox.Text = tostring(AIMBOT_DISTANCE)
+DistanceBox.TextSize = 12
+DistanceBox.Font = Enum.Font.GothamMedium
+DistanceBox.TextColor3 = C.WHITE
+DistanceBox.ClearTextOnFocus = false
+DistanceBox.ZIndex = 12
+DistanceBox.Parent = Content
+
+Corner(DistanceBox, 8)
+Stroke(DistanceBox, C.SURFACE3, 1, 0.35)
+
+--==================================================
+-- ESP
+--==================================================
+
+local ESPButton = CreateButton("ESP", 0, 143)
+
+local ESPDistanceBox = Instance.new("TextBox")
+ESPDistanceBox.Size = UDim2.fromOffset(182, 35)
+ESPDistanceBox.Position = UDim2.fromOffset(192, 143)
+ESPDistanceBox.BackgroundColor3 = C.SURFACE
+ESPDistanceBox.Text = tostring(ESP_DISTANCE)
+ESPDistanceBox.PlaceholderText = "ESP Distance"
+ESPDistanceBox.TextSize = 12
+ESPDistanceBox.Font = Enum.Font.GothamMedium
+ESPDistanceBox.TextColor3 = C.WHITE
+ESPDistanceBox.ClearTextOnFocus = false
+ESPDistanceBox.ZIndex = 12
+ESPDistanceBox.Parent = Content
+
+Corner(ESPDistanceBox, 8)
+Stroke(ESPDistanceBox, C.SURFACE3, 1, 0.35)
+
+--==================================================
+-- EXCLUDE
+--==================================================
+
+local ExcludeButton = CreateButton("Players / Exclude", 0, 185)
+
+local AimedLabel = Instance.new("TextLabel")
+AimedLabel.BackgroundTransparency = 1
+AimedLabel.Position = UDim2.fromOffset(192, 188)
+AimedLabel.Size = UDim2.fromOffset(182, 25)
+AimedLabel.Font = Enum.Font.GothamMedium
+AimedLabel.Text = "Aimed: None"
+AimedLabel.TextSize = 11
+AimedLabel.TextColor3 = C.SUB
+AimedLabel.TextXAlignment = Enum.TextXAlignment.Left
+AimedLabel.ZIndex = 12
+AimedLabel.Parent = Content
+
+--==================================================
+-- FOV CIRCLE
+--==================================================
+
+local Circle
+
+pcall(function()
+	Circle = Drawing.new("Circle")
+	Circle.Visible = false
+	Circle.Radius = FOV_RADIUS
+	Circle.Thickness = 1.5
+	Circle.NumSides = 64
+	Circle.Filled = false
+	Circle.Color = C.ACCENT
+	Circle.Transparency = 0.85
+end)
+
+local function UpdateFOV()
+	if not Circle then
+		return
+	end
+
+	local camera = workspace.CurrentCamera
+	if not camera then
+		return
+	end
+
+	Circle.Position = Vector2.new(
+		camera.ViewportSize.X / 2,
+		camera.ViewportSize.Y / 2
+	)
+
+	Circle.Radius = FOV_RADIUS
+	Circle.Visible = AIMBOT_ENABLED
+end
+
+--==================================================
+-- NOTIFICATIONS
+--==================================================
+
+local NotificationHolder = Instance.new("Frame")
+NotificationHolder.Name = "Notifications"
+
+--// TOP RIGHT
+NotificationHolder.AnchorPoint = Vector2.new(1, 0)
+NotificationHolder.Position = UDim2.new(1, -15, 0, 15)
+NotificationHolder.Size = UDim2.fromOffset(245, 300)
+NotificationHolder.BackgroundTransparency = 1
+NotificationHolder.ZIndex = 1000
+NotificationHolder.Parent = Gui
+
+local NotificationLayout = Instance.new("UIListLayout")
+NotificationLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+NotificationLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+NotificationLayout.Padding = UDim.new(0, 7)
+NotificationLayout.Parent = NotificationHolder
+
+local function Notify(text, duration)
+	duration = duration or 2
+
+	local Note = Instance.new("Frame")
+	Note.Size = UDim2.fromOffset(0, 42)
+	Note.BackgroundColor3 = C.SURFACE
+	Note.BorderSizePixel = 0
+	Note.ZIndex = 1001
+	Note.Parent = NotificationHolder
+
+	Corner(Note, 9)
+	Stroke(Note, C.SURFACE3, 1, 0.2)
+
+	local Accent = Instance.new("Frame")
+	Accent.Size = UDim2.fromOffset(3, 24)
+	Accent.Position = UDim2.fromOffset(8, 9)
+	Accent.BackgroundColor3 = C.ACCENT
+	Accent.BorderSizePixel = 0
+	Accent.ZIndex = 1002
+	Accent.Parent = Note
+
+	Corner(Accent, 2)
+
+	local Text = Instance.new("TextLabel")
+	Text.BackgroundTransparency = 1
+	Text.Position = UDim2.fromOffset(19, 0)
+	Text.Size = UDim2.new(1, -27, 1, 0)
+	Text.Font = Enum.Font.GothamMedium
+	Text.Text = text
+	Text.TextSize = 11
+	Text.TextColor3 = C.WHITE
+	Text.TextXAlignment = Enum.TextXAlignment.Left
+	Text.ZIndex = 1002
+	Text.Parent = Note
+
+	Tween(Note, 0.2, {
+		Size = UDim2.fromOffset(245, 42)
+	}):Play()
+
+	task.delay(duration, function()
+		if Note.Parent then
+			local out = Tween(Note, 0.2, {
+				Size = UDim2.fromOffset(0, 42)
+			})
+
+			out:Play()
+			out.Completed:Wait()
+
+			if Note.Parent then
+				Note:Destroy()
+			end
+		end
+	end)
+end
+
+--==================================================
+-- AIM PART
+--==================================================
+
+local function GetAimPart(character)
+	if AIM_PART == "HumanoidRootPart" then
+		return character:FindFirstChild("HumanoidRootPart")
+	end
+
+	return character:FindFirstChild("Head")
+		or character:FindFirstChild("HumanoidRootPart")
+end
+
+--==================================================
+-- WALLCHECK
+--==================================================
+
+local function CanSee(part)
+	if not WALLCHECK then
+		return true
+	end
+
+	local camera = workspace.CurrentCamera
+	if not camera or not part then
+		return false
+	end
+
+	local origin = camera.CFrame.Position
+	local direction = part.Position - origin
+
+	local params = RaycastParams.new()
+	params.FilterType = Enum.RaycastFilterType.Exclude
+	params.FilterDescendantsInstances = {
+		LocalPlayer.Character
+	}
+
+	local result = workspace:Raycast(
+		origin,
+		direction,
+		params
+	)
+
+	if not result then
+		return true
+	end
+
+	return result.Instance:IsDescendantOf(part.Parent)
+end
+
+--==================================================
+-- FIND TARGET
+--==================================================
+
+local function FindTarget()
+	local myCharacter = GetCharacter(LocalPlayer)
+
+	if not myCharacter then
+		return nil
+	end
+
+	local myRoot = myCharacter:FindFirstChild("HumanoidRootPart")
+
+	if not myRoot then
+		return nil
+	end
+
+	local camera = workspace.CurrentCamera
+
+	if not camera then
+		return nil
+	end
+
+	local viewport = camera.ViewportSize
+
+	local center = Vector2.new(
+		viewport.X / 2,
+		viewport.Y / 2
+	)
+
+	local bestPlayer = nil
+	local bestScreenDistance = math.huge
+
+	for _, player in ipairs(Players:GetPlayers()) do
+		if player ~= LocalPlayer and not IsExcluded(player) then
+
+			local character = GetCharacter(player)
+
+			if character then
+				local root =
+					character:FindFirstChild("HumanoidRootPart")
+
+				local aimPart =
+					GetAimPart(character)
+
+				if root and aimPart then
+					local worldDistance =
+						(root.Position - myRoot.Position).Magnitude
+
+					if worldDistance <= AIMBOT_DISTANCE then
+
+						local screenPos, onScreen =
+							camera:WorldToViewportPoint(
+								aimPart.Position
+							)
+
+						if onScreen then
+
+							local screenDistance =
+								(
+									Vector2.new(
+										screenPos.X,
+										screenPos.Y
+									) - center
+								).Magnitude
+
+							if screenDistance <= FOV_RADIUS then
+
+								if CanSee(aimPart) then
+
+									if screenDistance <
+										bestScreenDistance then
+
+										bestScreenDistance =
+											screenDistance
+
+										bestPlayer = player
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+	return bestPlayer
+end
+
+--==================================================
+-- AIMBOT
+--==================================================
+
+local function SetAimbot(enabled, silent)
+	AIMBOT_ENABLED = enabled
+
+	SetButton(AimbotButton, enabled)
+
+	if Circle then
+		Circle.Visible = enabled
+	end
+
+	if not enabled then
+		CURRENT_TARGET = nil
+		AimedLabel.Text = "Aimed: None"
+	end
+
+	if not silent then
+		Notify(
+			"Aimbot "
+			.. (enabled and "Enabled" or "Disabled")
+		)
+	end
+end
+
+RunService:BindToRenderStep(
+	"SweetHub_Aimbot",
+	Enum.RenderPriority.Camera.Value + 1,
+	function()
+
+		if not AIMBOT_ENABLED then
+			return
+		end
+
+		local camera = workspace.CurrentCamera
+
+		if not camera then
+			return
+		end
+
+		CURRENT_TARGET = FindTarget()
+
+		if not CURRENT_TARGET then
+			AimedLabel.Text = "Aimed: None"
+			return
+		end
+
+		local character =
+			GetCharacter(CURRENT_TARGET)
+
+		if not character then
+			CURRENT_TARGET = nil
+			return
+		end
+
+		local aimPart =
+			GetAimPart(character)
+
+		if not aimPart then
+			return
+		end
+
+		AimedLabel.Text =
+			"Aimed: " .. CURRENT_TARGET.DisplayName
+
+		local goal =
+			CFrame.new(
+				camera.CFrame.Position,
+				aimPart.Position
+			)
+
+		if STRONG_LOCK then
+			camera.CFrame = goal
+		else
+			camera.CFrame =
+				camera.CFrame:Lerp(
+					goal,
+					AIM_SMOOTHNESS
+				)
+		end
+	end
+)
+
+--==================================================
+-- FOV INPUT
+--==================================================
+
+FOVBox.FocusLost:Connect(function()
+	local value = tonumber(FOVBox.Text)
+
+	if value and value >= 1 and value <= 2000 then
+		FOV_RADIUS = math.floor(value)
+		FOVBox.Text = tostring(FOV_RADIUS)
+
+		if Circle then
+			Circle.Radius = FOV_RADIUS
+		end
+
+		Notify("FOV: " .. FOV_RADIUS)
+	else
+		FOVBox.Text = tostring(FOV_RADIUS)
+	end
+
+	UpdateFOV()
+end)
+
+--==================================================
+-- AIMBOT DISTANCE INPUT
+--==================================================
+
+DistanceBox.FocusLost:Connect(function()
+	local value = tonumber(DistanceBox.Text)
+
+	if value and value >= 1 and value <= 2000 then
+		AIMBOT_DISTANCE = math.floor(value)
+		DistanceBox.Text = tostring(AIMBOT_DISTANCE)
+
+		Notify(
+			"Aimbot Distance: "
+			.. AIMBOT_DISTANCE
+		)
+	else
+		DistanceBox.Text =
+			tostring(AIMBOT_DISTANCE)
+	end
+end)
+
+--==================================================
+-- ESP
+--==================================================
+
+local ESPObjects = {}
+
+local function RemoveESP(player)
+	local data = ESPObjects[player]
+
+	if not data then
+		return
+	end
+
+	if data.Box then
+		data.Box:Destroy()
+	end
+
+	if data.Outline then
+		data.Outline:Destroy()
+	end
+
+	ESPObjects[player] = nil
+end
+
+local function CreateESP(player)
+	if player == LocalPlayer then
+		return
+	end
+
+	if ESPObjects[player] then
+		return
+	end
+
+	local box = Instance.new("BoxHandleAdornment")
+	box.Name = "SweetHubESP"
+	box.Size = Vector3.new(4, 6, 2)
+	box.Color3 = C.ACCENT
+	box.Transparency = 0.55
+	box.AlwaysOnTop = true
+	box.ZIndex = 5
+	box.Visible = false
+	box.Parent = workspace
+
+	local outline = Instance.new("BoxHandleAdornment")
+	outline.Name = "SweetHubESPOutline"
+	outline.Size = Vector3.new(4.2, 6.2, 2.2)
+	outline.Color3 = C.WHITE
+	outline.Transparency = 0.85
+	outline.AlwaysOnTop = true
+	outline.ZIndex = 4
+	outline.Visible = false
+	outline.Parent = workspace
+
+	ESPObjects[player] = {
+		Box = box,
+		Outline = outline
+	}
+end
+
+local function UpdateESP(player)
+	local data = ESPObjects[player]
+
+	if not data then
+		return
+	end
+
+	if not ESP_ENABLED or IsExcluded(player) then
+		data.Box.Visible = false
+		data.Outline.Visible = false
+		return
+	end
+
+	local character = GetCharacter(player)
+
+	if not character then
+		data.Box.Visible = false
+		data.Outline.Visible = false
+		return
+	end
+
+	local root =
+		character:FindFirstChild("HumanoidRootPart")
+
+	if not root then
+		return
+	end
+
+	local myCharacter =
+		GetCharacter(LocalPlayer)
+
+	local myRoot =
+		myCharacter and
+		myCharacter:FindFirstChild("HumanoidRootPart")
+
+	if not myRoot then
+		return
+	end
+
+	local distance =
+		(root.Position - myRoot.Position).Magnitude
+
+	if distance > ESP_DISTANCE then
+		data.Box.Visible = false
+		data.Outline.Visible = false
+		return
+	end
+
+	data.Box.Adornee = root
+	data.Outline.Adornee = root
+
+	data.Box.Visible = true
+	data.Outline.Visible = true
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+	if player ~= LocalPlayer then
+		CreateESP(player)
+	end
+end
+
+Players.PlayerAdded:Connect(function(player)
+	CreateESP(player)
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	RemoveESP(player)
+	EXCLUDED[player] = nil
+end)
+
+task.spawn(function()
+	while Gui.Parent do
+
+		if ESP_ENABLED then
+			for _, player in ipairs(Players:GetPlayers()) do
+				if player ~= LocalPlayer then
+
+					if not ESPObjects[player] then
+						CreateESP(player)
+					end
+
+					UpdateESP(player)
+				end
+			end
+		end
+
+		task.wait(0.06)
+	end
+end)
+
+ESPButton.MouseButton1Click:Connect(function()
+	ESP_ENABLED = not ESP_ENABLED
+
+	SetButton(ESPButton, ESP_ENABLED)
+
+	if not ESP_ENABLED then
+		for _, data in pairs(ESPObjects) do
+			data.Box.Visible = false
+			data.Outline.Visible = false
+		end
+	end
+
+	Notify(
+		"ESP "
+		.. (ESP_ENABLED and "Enabled" or "Disabled")
+	)
+end)
+
+ESPDistanceBox.FocusLost:Connect(function()
+	local value = tonumber(ESPDistanceBox.Text)
+
+	if value and value >= 1 and value <= 5000 then
+		ESP_DISTANCE = math.floor(value)
+		ESPDistanceBox.Text = tostring(ESP_DISTANCE)
+
+		Notify(
+			"ESP Distance: "
+			.. ESP_DISTANCE
+		)
+	else
+		ESPDistanceBox.Text =
+			tostring(ESP_DISTANCE)
+	end
+end)
+
+--==================================================
+-- EXCLUDE PANEL
+--==================================================
+
+local ExcludePanel = Instance.new("Frame")
+ExcludePanel.Size = UDim2.fromOffset(205, 235)
+ExcludePanel.Position = UDim2.new(1, 8, 0, 0)
+ExcludePanel.BackgroundColor3 = C.SURFACE
+ExcludePanel.Visible = false
+ExcludePanel.ZIndex = 20
+ExcludePanel.Parent = Main
+
+Corner(ExcludePanel, 10)
+Stroke(ExcludePanel, C.SURFACE3, 1, 0.2)
+
+local ExcludeTitle = Instance.new("TextLabel")
+ExcludeTitle.BackgroundTransparency = 1
+ExcludeTitle.Position = UDim2.fromOffset(10, 8)
+ExcludeTitle.Size = UDim2.new(1, -20, 0, 22)
+ExcludeTitle.Font = Enum.Font.GothamBold
+ExcludeTitle.Text = "Players"
+ExcludeTitle.TextSize = 13
+ExcludeTitle.TextColor3 = C.WHITE
+ExcludeTitle.TextXAlignment = Enum.TextXAlignment.Left
+ExcludeTitle.ZIndex = 21
+ExcludeTitle.Parent = ExcludePanel
+
+--==================================================
+-- INCLUDE / EXCLUDE ALL
+--==================================================
+
+local ExcludeAll = Instance.new("TextButton")
+ExcludeAll.Size = UDim2.fromOffset(88, 30)
+ExcludeAll.Position = UDim2.fromOffset(10, 35)
+ExcludeAll.BackgroundColor3 = C.RED
+ExcludeAll.Text = "Exclude All"
+ExcludeAll.TextSize = 10
+ExcludeAll.Font = Enum.Font.GothamBold
+ExcludeAll.TextColor3 = C.WHITE
+ExcludeAll.AutoButtonColor = false
+ExcludeAll.ZIndex = 21
+ExcludeAll.Parent = ExcludePanel
+
+Corner(ExcludeAll, 7)
+
+local IncludeAll = Instance.new("TextButton")
+IncludeAll.Size = UDim2.fromOffset(88, 30)
+IncludeAll.Position = UDim2.fromOffset(106, 35)
+IncludeAll.BackgroundColor3 = C.GREEN
+IncludeAll.Text = "Include All"
+IncludeAll.TextSize = 10
+IncludeAll.Font = Enum.Font.GothamBold
+IncludeAll.TextColor3 = C.BLACK
+IncludeAll.AutoButtonColor = false
+IncludeAll.ZIndex = 21
+IncludeAll.Parent = ExcludePanel
+
+Corner(IncludeAll, 7)
+
+local PlayerList = Instance.new("ScrollingFrame")
+PlayerList.BackgroundTransparency = 1
+PlayerList.Position = UDim2.fromOffset(8, 72)
+PlayerList.Size = UDim2.new(1, -16, 1, -80)
+PlayerList.ScrollBarThickness = 2
+PlayerList.CanvasSize = UDim2.new()
+PlayerList.ZIndex = 21
+PlayerList.Parent = ExcludePanel
+
+local PlayerLayout = Instance.new("UIListLayout")
+PlayerLayout.Padding = UDim.new(0, 4)
+PlayerLayout.Parent = PlayerList
+
+local function RefreshPlayerList()
+	for _, child in ipairs(PlayerList:GetChildren()) do
+		if child:IsA("TextButton") then
+			child:Destroy()
+		end
+	end
+
+	for _, player in ipairs(Players:GetPlayers()) do
+
+		if player ~= LocalPlayer then
+
+			local button = Instance.new("TextButton")
+			button.Size = UDim2.new(1, -2, 0, 28)
+
+			local excluded =
+				IsExcluded(player)
+
+			button.BackgroundColor3 =
+				excluded
+				and C.RED
+				or C.SURFACE2
+
+			button.Text =
+				excluded
+				and player.DisplayName .. "  [X]"
+				or player.DisplayName
+
+			button.TextSize = 10
+			button.Font = Enum.Font.GothamMedium
+			button.TextColor3 = C.WHITE
+			button.AutoButtonColor = false
+			button.ZIndex = 22
+			button.Parent = PlayerList
+
+			Corner(button, 6)
+
+			button.MouseButton1Click:Connect(function()
+
+				EXCLUDED[player] =
+					not EXCLUDED[player]
+
+				Notify(
+					player.DisplayName
+					.. (
+						EXCLUDED[player]
+						and " excluded"
+						or " included"
+					)
+				)
+
+				RefreshPlayerList()
+			end)
+		end
+	end
+
+	task.defer(function()
+		PlayerList.CanvasSize =
+			UDim2.fromOffset(
+				0,
+				PlayerLayout.AbsoluteContentSize.Y + 5
+			)
+	end)
+end
+
+ExcludeAll.MouseButton1Click:Connect(function()
+
+	for _, player in ipairs(Players:GetPlayers()) do
+		if player ~= LocalPlayer then
+			EXCLUDED[player] = true
+		end
+	end
+
+	RefreshPlayerList()
+	Notify("All players excluded")
+end)
+
+IncludeAll.MouseButton1Click:Connect(function()
+
+	table.clear(EXCLUDED)
+
+	RefreshPlayerList()
+	Notify("All players included")
+end)
+
+ExcludeButton.MouseButton1Click:Connect(function()
+	ExcludePanel.Visible = not ExcludePanel.Visible
+
+	if ExcludePanel.Visible then
+		RefreshPlayerList()
+	end
+end)
+
+--==================================================
+-- MAIN BUTTONS
+--==================================================
+
+AimbotButton.MouseButton1Click:Connect(function()
+	SetAimbot(not AIMBOT_ENABLED)
+end)
+
+StrongButton.MouseButton1Click:Connect(function()
+	STRONG_LOCK = not STRONG_LOCK
+	SetButton(StrongButton, STRONG_LOCK)
+
+	Notify(
+		"Strong Lock "
+		.. (STRONG_LOCK and "Enabled" or "Disabled")
+	)
+end)
+
+WallButton.MouseButton1Click:Connect(function()
+	WALLCHECK = not WALLCHECK
+	SetButton(WallButton, WALLCHECK)
+
+	Notify(
+		"Wallcheck "
+		.. (WALLCHECK and "Enabled" or "Disabled")
+	)
+end)
+
+AimPartButton.MouseButton1Click:Connect(function()
+
+	if AIM_PART == "Head" then
+		AIM_PART = "HumanoidRootPart"
+		AimPartButton.Text = "Aim: HRP"
+	else
+		AIM_PART = "Head"
+		AimPartButton.Text = "Aim: Head"
+	end
+
+	Notify(
+		"Aim: "
+		.. (AIM_PART == "Head" and "Head" or "HRP")
+	)
+end)
+
+--==================================================
+-- MAIN DRAG
+--==================================================
+
+local MainDragging = false
+local MainDragStart
+local MainStartPosition
+
+Header.InputBegan:Connect(function(input)
+
+	if input.UserInputType == Enum.UserInputType.MouseButton1
+		or input.UserInputType == Enum.UserInputType.Touch then
+
+		MainDragging = true
+		MainDragStart = input.Position
+		MainStartPosition = Main.Position
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				MainDragging = false
+			end
+		end)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+
+	if not MainDragging then
+		return
+	end
+
+	if input.UserInputType ~= Enum.UserInputType.MouseMovement
+		and input.UserInputType ~= Enum.UserInputType.Touch then
+		return
+	end
+
+	local delta = input.Position - MainDragStart
+
+	Main.Position = UDim2.new(
+		MainStartPosition.X.Scale,
+		MainStartPosition.X.Offset + delta.X,
+		MainStartPosition.Y.Scale,
+		MainStartPosition.Y.Offset + delta.Y
+	)
+end)
+
+--==================================================
+-- FLOATING MAIN ICON
+--==================================================
+
+local Icon = Instance.new("ImageButton")
+Icon.Name = "SweetHubIcon"
+Icon.Size = UDim2.fromOffset(45, 45)
+Icon.Position = UDim2.new(0, 55, 0.5, 0)
+Icon.AnchorPoint = Vector2.new(0.5, 0.5)
+Icon.BackgroundColor3 = C.SURFACE
+Icon.Image =
+	"rbxthumb://type=Asset&id=126926408102660&w=150&h=150"
+Icon.AutoButtonColor = false
+Icon.Visible = false
+Icon.ZIndex = 900
+Icon.Parent = Gui
+
+Corner(Icon, 12)
+Stroke(Icon, C.SURFACE3, 1, 0.2)
+
+local IconDragging = false
+local IconMoved = false
+local IconStart
+local IconPosition
+
+Icon.InputBegan:Connect(function(input)
+
+	if input.UserInputType == Enum.UserInputType.MouseButton1
+		or input.UserInputType == Enum.UserInputType.Touch then
+
+		IconDragging = true
+		IconMoved = false
+		IconStart = input.Position
+		IconPosition = Icon.Position
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				IconDragging = false
+			end
+		end)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+
+	if not IconDragging then
+		return
+	end
+
+	if input.UserInputType ~= Enum.UserInputType.MouseMovement
+		and input.UserInputType ~= Enum.UserInputType.Touch then
+		return
+	end
+
+	local delta = input.Position - IconStart
+
+	if math.abs(delta.X) > 3
+		or math.abs(delta.Y) > 3 then
+		IconMoved = true
+	end
+
+	Icon.Position = UDim2.new(
+		IconPosition.X.Scale,
+		IconPosition.X.Offset + delta.X,
+		IconPosition.Y.Scale,
+		IconPosition.Y.Offset + delta.Y
+	)
+end)
+
+Icon.MouseButton1Click:Connect(function()
+
+	if IconMoved then
+		return
+	end
+
+	Icon.Visible = false
+	Main.Visible = true
+
+	Main.Size = UDim2.fromOffset(400, 285)
+
+	Tween(Main, 0.22, {
+		Size = UDim2.fromOffset(420, 300)
+	}):Play()
+end)
+
+Close.MouseButton1Click:Connect(function()
+
+	Tween(Main, 0.18, {
+		Size = UDim2.fromOffset(400, 285)
+	}):Play()
+
+	task.delay(0.18, function()
+		Main.Visible = false
+		Icon.Visible = true
+	end)
+end)
+
+--==================================================
+-- MOBILE SHORTCUT SYSTEM
+--==================================================
+
+local ShortcutHolder = Instance.new("Frame")
+ShortcutHolder.Name = "MobileShortcuts"
+ShortcutHolder.BackgroundTransparency = 1
+ShortcutHolder.Size = UDim2.fromScale(1, 1)
+ShortcutHolder.Visible = false
+ShortcutHolder.ZIndex = 800
+ShortcutHolder.Parent = Gui
+
+local ShortcutHandle = Instance.new("TextButton")
+ShortcutHandle.Name = "ShortcutHandle"
+ShortcutHandle.Size = UDim2.fromOffset(42, 42)
+ShortcutHandle.Position = UDim2.new(0, 65, 0.72, 0)
+ShortcutHandle.BackgroundColor3 = C.SURFACE
+ShortcutHandle.Text = "⚡"
+ShortcutHandle.TextSize = 19
+ShortcutHandle.Font = Enum.Font.GothamBold
+ShortcutHandle.TextColor3 = C.WHITE
+ShortcutHandle.AutoButtonColor = false
+ShortcutHandle.ZIndex = 900
+ShortcutHandle.Parent = Gui
+
+Corner(ShortcutHandle, 12)
+Stroke(ShortcutHandle, C.SURFACE3, 1, 0.2)
+
+--==================================================
+-- SHORTCUT CREATION
+--==================================================
+
+local Shortcuts = {}
+
+local ShortcutData = {
+	{
+		Name = "Aimbot",
+		Short = "A",
+		Color = C.ACCENT
+	},
+	{
+		Name = "ESP",
+		Short = "E",
+		Color = C.GREEN
+	},
+	{
+		Name = "Wallcheck",
+		Short = "W",
+		Color = C.YELLOW
+	},
+	{
+		Name = "Strong",
+		Short = "S",
+		Color = C.RED
+	},
+	{
+		Name = "Aim Part",
+		Short = "P",
+		Color = C.ACCENT
+	}
+}
+
+local function ShortcutState(name)
+	if name == "Aimbot" then
+		return AIMBOT_ENABLED
+	elseif name == "ESP" then
+		return ESP_ENABLED
+	elseif name == "Wallcheck" then
+		return WALLCHECK
+	elseif name == "Strong" then
+		return STRONG_LOCK
+	end
+
+	return false
+end
+
+local function ToggleShortcut(name)
+
+	if name == "Aimbot" then
+		SetAimbot(not AIMBOT_ENABLED)
+
+	elseif name == "ESP" then
+
+		ESP_ENABLED = not ESP_ENABLED
+		SetButton(ESPButton, ESP_ENABLED)
+
+		if not ESP_ENABLED then
+			for _, data in pairs(ESPObjects) do
+				data.Box.Visible = false
+				data.Outline.Visible = false
+			end
+		end
+
+		Notify(
+			"ESP "
+			.. (ESP_ENABLED and "Enabled" or "Disabled")
+		)
+
+	elseif name == "Wallcheck" then
+
+		WALLCHECK = not WALLCHECK
+		SetButton(WallButton, WALLCHECK)
+
+		Notify(
+			"Wallcheck "
+			.. (WALLCHECK and "Enabled" or "Disabled")
+		)
+
+	elseif name == "Strong" then
+
+		STRONG_LOCK = not STRONG_LOCK
+		SetButton(StrongButton, STRONG_LOCK)
+
+		Notify(
+			"Strong Lock "
+			.. (STRONG_LOCK and "Enabled" or "Disabled")
+		)
+
+	elseif name == "Aim Part" then
+
+		if AIM_PART == "Head" then
+			AIM_PART = "HumanoidRootPart"
+			AimPartButton.Text = "Aim: HRP"
+		else
+			AIM_PART = "Head"
+			AimPartButton.Text = "Aim: Head"
+		end
+
+		Notify(
+			"Aim: "
+			.. (AIM_PART == "Head" and "Head" or "HRP")
+		)
+	end
+end
+
+local function UpdateShortcutVisual(name, button)
+
+	local enabled = ShortcutState(name)
+
+	Tween(button, 0.12, {
+		BackgroundColor3 =
+			enabled
+			and C.GREEN
+			or C.SURFACE,
+
+		TextColor3 =
+			enabled
+			and C.BLACK
+			or C.WHITE
+	}):Play()
+end
+
+for index, info in ipairs(ShortcutData) do
+
+	local button = Instance.new("TextButton")
+
+	button.Name = info.Name
+	button.Size = UDim2.fromOffset(105, 36)
+
+	button.Position =
+		UDim2.new(
+			0,
+			65,
+			0.72,
+			-(index * 42)
+		)
+
+	button.BackgroundColor3 = C.SURFACE
+	button.Text = info.Short .. "  " .. info.Name
+	button.TextSize = 11
+	button.Font = Enum.Font.GothamMedium
+	button.TextColor3 = C.WHITE
+	button.AutoButtonColor = false
+	button.ZIndex = 801
+	button.Parent = ShortcutHolder
+
+	Corner(button, 9)
+	Stroke(button, C.SURFACE3, 1, 0.2)
+
+	Shortcuts[info.Name] = button
+
+	button.MouseButton1Click:Connect(function()
+		ToggleShortcut(info.Name)
+		UpdateShortcutVisual(info.Name, button)
+	end)
+end
+
+--==================================================
+-- SHORTCUT DRAG
+--==================================================
+
+local ShortcutDragging = {}
+local ShortcutDragStart = {}
+local ShortcutStartPosition = {}
+
+for name, button in pairs(Shortcuts) do
+
+	button.InputBegan:Connect(function(input)
+
+		if input.UserInputType == Enum.UserInputType.MouseButton1
+			or input.UserInputType == Enum.UserInputType.Touch then
+
+			ShortcutDragging[name] = true
+			ShortcutDragStart[name] = input.Position
+			ShortcutStartPosition[name] = button.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					ShortcutDragging[name] = false
+				end
+			end)
+		end
+	end)
+end
+
+UserInputService.InputChanged:Connect(function(input)
+
+	if input.UserInputType ~= Enum.UserInputType.MouseMovement
+		and input.UserInputType ~= Enum.UserInputType.Touch then
+		return
+	end
+
+	for name, button in pairs(Shortcuts) do
+
+		if ShortcutDragging[name] then
+
+			local delta =
+				input.Position
+				- ShortcutDragStart[name]
+
+			button.Position = UDim2.new(
+				ShortcutStartPosition[name].X.Scale,
+				ShortcutStartPosition[name].X.Offset + delta.X,
+
+				ShortcutStartPosition[name].Y.Scale,
+				ShortcutStartPosition[name].Y.Offset + delta.Y
+			)
+		end
+	end
+end)
+
+--==================================================
+-- HOLD SHORTCUT HANDLE = HIDE
+-- TAP = SHOW
+--==================================================
+
+local HandleHolding = false
+local HandleHoldStart = 0
+local HandleMoved = false
+
+ShortcutHandle.InputBegan:Connect(function(input)
+
+	if input.UserInputType == Enum.UserInputType.MouseButton1
+		or input.UserInputType == Enum.UserInputType.Touch then
+
+		HandleHolding = true
+		HandleHoldStart = os.clock()
+		HandleMoved = false
+
+		task.delay(0.45, function()
+
+			if HandleHolding and not HandleMoved then
+
+				ShortcutHolder.Visible =
+					not ShortcutHolder.Visible
+
+				Notify(
+					ShortcutHolder.Visible
+					and "Shortcuts Shown"
+					or "Shortcuts Hidden"
+				)
+			end
+		end)
+
+		input.Changed:Connect(function()
+
+			if input.UserInputState == Enum.UserInputState.End then
+				HandleHolding = false
+			end
+		end)
+	end
+end)
+
+--==================================================
+-- DRAG SHORTCUT HANDLE
+--==================================================
+
+local HandleDragging = false
+local HandleDragStart
+local HandleStartPosition
+
+ShortcutHandle.InputBegan:Connect(function(input)
+
+	if input.UserInputType == Enum.UserInputType.MouseButton1
+		or input.UserInputType == Enum.UserInputType.Touch then
+
+		HandleDragging = true
+		HandleDragStart = input.Position
+		HandleStartPosition = ShortcutHandle.Position
+
+		input.Changed:Connect(function()
+
+			if input.UserInputState == Enum.UserInputState.End then
+				HandleDragging = false
+			end
+		end)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+
+	if not HandleDragging then
+		return
+	end
+
+	if input.UserInputType ~= Enum.UserInputType.MouseMovement
+		and input.UserInputType ~= Enum.UserInputType.Touch then
+		return
+	end
+
+	local delta =
+		input.Position - HandleDragStart
+
+	if math.abs(delta.X) > 4
+		or math.abs(delta.Y) > 4 then
+
+		HandleMoved = true
+	end
+
+	ShortcutHandle.Position = UDim2.new(
+		HandleStartPosition.X.Scale,
+		HandleStartPosition.X.Offset + delta.X,
+
+		HandleStartPosition.Y.Scale,
+		HandleStartPosition.Y.Offset + delta.Y
+	)
+end)
+
+--==================================================
+-- KEYBOARD SUPPORT
+--==================================================
+
+UserInputService.InputBegan:Connect(function(input, processed)
+
+	if processed then
+		return
+	end
+
+	if input.KeyCode == Enum.KeyCode.Q then
+		SetAimbot(not AIMBOT_ENABLED)
+
+	elseif input.KeyCode == Enum.KeyCode.E then
+
+		if AIM_PART == "Head" then
+			AIM_PART = "HumanoidRootPart"
+			AimPartButton.Text = "Aim: HRP"
+		else
+			AIM_PART = "Head"
+			AimPartButton.Text = "Aim: Head"
+		end
+	end
+end)
+
+--==================================================
+-- INTRO
+--==================================================
+
+local Intro = Instance.new("Frame")
+Intro.Size = UDim2.fromScale(1, 1)
+Intro.BackgroundColor3 = C.BLACK
+Intro.BorderSizePixel = 0
+Intro.ZIndex = 2000
+Intro.Parent = Gui
+
+local Sweet = Instance.new("TextLabel")
+Sweet.BackgroundTransparency = 1
+Sweet.AnchorPoint = Vector2.new(1, 0.5)
+Sweet.Position = UDim2.new(0.5, -5, 0.5, 0)
+Sweet.Size = UDim2.fromOffset(150, 55)
+Sweet.Font = Enum.Font.GothamBold
+Sweet.Text = "Sweet"
+Sweet.TextSize = 44
+Sweet.TextColor3 = C.WHITE
+Sweet.TextXAlignment = Enum.TextXAlignment.Right
+Sweet.ZIndex = 2001
+Sweet.Parent = Intro
+
+local Hub = Instance.new("TextLabel")
+Hub.BackgroundTransparency = 1
+Hub.AnchorPoint = Vector2.new(0, 0.5)
+Hub.Position = UDim2.new(0.5, 5, 0.5, 0)
+Hub.Size = UDim2.fromOffset(150, 55)
+Hub.Font = Enum.Font.GothamBold
+Hub.Text = "Hub"
+Hub.TextSize = 44
+Hub.TextColor3 = C.ACCENT
+Hub.TextXAlignment = Enum.TextXAlignment.Left
+Hub.ZIndex = 2001
+Hub.Parent = Intro
+
+local Sub = Instance.new("TextLabel")
+Sub.BackgroundTransparency = 1
+Sub.AnchorPoint = Vector2.new(0.5, 0)
+Sub.Position = UDim2.new(0.5, 0, 0.5, 42)
+Sub.Size = UDim2.fromOffset(250, 25)
+Sub.Font = Enum.Font.GothamMedium
+Sub.Text = "• Rivals"
+Sub.TextSize = 14
+Sub.TextColor3 = C.SUB
+Sub.TextTransparency = 1
+Sub.ZIndex = 2001
+Sub.Parent = Intro
+
+--==================================================
+-- START
+--==================================================
+
+task.spawn(function()
+
+	Sweet.Position =
+		UDim2.new(0.5, -165, 0.5, 0)
+
+	Hub.Position =
+		UDim2.new(0.5, 165, 0.5, 0)
+
+	Tween(Sweet, 0.75, {
+		Position =
+			UDim2.new(0.5, -5, 0.5, 0)
+	}):Play()
+
+	Tween(Hub, 0.75, {
+		Position =
+			UDim2.new(0.5, 5, 0.5, 0)
+	}):Play()
+
+	task.wait(1.15)
+
+	Tween(Sub, 0.35, {
+		TextTransparency = 0
+	}):Play()
+
+	task.wait(0.65)
+
+	Tween(Intro, 0.35, {
+		BackgroundTransparency = 1
+	}):Play()
+
+	Tween(Sweet, 0.3, {
+		TextTransparency = 1
+	}):Play()
+
+	Tween(Hub, 0.3, {
+		TextTransparency = 1
+	}):Play()
+
+	Tween(Sub, 0.3, {
+		TextTransparency = 1
+	}):Play()
+
+	task.wait(0.35)
+
+	Intro:Destroy()
+
+	Main.Visible = true
+
+	Main.Size = UDim2.fromOffset(400, 285)
+
+	Tween(Main, 0.25, {
+		Size = UDim2.fromOffset(420, 300)
+	}):Play()
+
+	UpdateFOV()
+
+	task.delay(0.4, function()
+		Notify("SweetHub loaded")
+	end)
+end)
