@@ -1,0 +1,79 @@
+--// SweetHub • Day To Night
+
+local Lighting = game:GetService("Lighting")
+local TweenService = game:GetService("TweenService")
+
+--// Cleanup Previous Version
+if _G.SweetHubDayNightCleanup then
+    _G.SweetHubDayNightCleanup()
+end
+
+--// Settings
+local TransitionTime = 2
+local Enabled = false
+local ActiveTween
+
+local Original = {
+    ClockTime = Lighting.ClockTime,
+    Brightness = Lighting.Brightness,
+    Ambient = Lighting.Ambient,
+    OutdoorAmbient = Lighting.OutdoorAmbient,
+    ExposureCompensation = Lighting.ExposureCompensation
+}
+
+local Night = {
+    ClockTime = 0,
+    Brightness = 1,
+    Ambient = Color3.fromRGB(45, 45, 65),
+    OutdoorAmbient = Color3.fromRGB(65, 65, 90),
+    ExposureCompensation = 0
+}
+
+--// Apply Lighting
+local function ApplyLighting(Settings)
+    if ActiveTween then
+        ActiveTween:Cancel()
+    end
+
+    ActiveTween = TweenService:Create(
+        Lighting,
+        TweenInfo.new(
+            TransitionTime,
+            Enum.EasingStyle.Sine,
+            Enum.EasingDirection.InOut
+        ),
+        Settings
+    )
+
+    ActiveTween:Play()
+end
+
+--// Toggle Day / Night
+local function ToggleDayNight()
+    Enabled = not Enabled
+
+    if Enabled then
+        ApplyLighting(Night)
+    else
+        ApplyLighting(Original)
+    end
+
+    return Enabled
+end
+
+--// Cleanup
+_G.SweetHubDayNightCleanup = function()
+    if ActiveTween then
+        ActiveTween:Cancel()
+    end
+end
+
+--// Public Toggle
+_G.SweetHubDayNight = ToggleDayNight
+
+--// Start Night Mode Immediately
+Enabled = true
+ApplyLighting(Night)
+
+print("SweetHub Day/Night loaded!")
+print("Toggle using: _G.SweetHubDayNight()")
