@@ -1,0 +1,518 @@
+--// SweetHub Futuristic Selector
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+--// Cleanup
+local Old = PlayerGui:FindFirstChild("SweetHubSelector")
+if Old then
+    Old:Destroy()
+end
+
+--// Theme
+local Theme = {
+    Background = Color3.fromRGB(9, 10, 16),
+    Surface = Color3.fromRGB(18, 19, 29),
+    Surface2 = Color3.fromRGB(27, 28, 42),
+    Purple = Color3.fromRGB(155, 105, 255),
+    Text = Color3.fromRGB(245, 243, 255),
+    SubText = Color3.fromRGB(155, 153, 175)
+}
+
+--// Script URLs
+local Scripts = {
+    {
+        Name = "⭐ • MM2",
+        Description = "Murder Mystery 2",
+        Accent = Color3.fromRGB(255, 215, 80),
+        GameImage = "rbxassetid://0",
+        Url = "https://raw.githubusercontent.com/SweetBloxy/SweetHub/main/SweetHubmm2",
+        Enabled = true
+    },
+    {
+        Name = "💎 • MM2 Values",
+        Description = "MM2 weapon values",
+        Accent = Color3.fromRGB(100, 220, 255),
+        GameImage = "rbxassetid://0",
+        Url = "https://raw.githubusercontent.com/SweetBloxy/SweetHub/main/Mm2Value",
+        Enabled = true
+    },
+    {
+        Name = "🟣 • MMV",
+        Description = "Murder Mystery 2",
+        Accent = Color3.fromRGB(175, 125, 255),
+        GameImage = "rbxassetid://0",
+        Url = "https://raw.githubusercontent.com/SweetBloxy/SweetHub/refs/heads/main/SweetHubMMV",
+        Enabled = True
+    },
+    {
+        Name = "☁️ • Wallhop",
+        Description = "Wallhop utility",
+        Accent = Color3.fromRGB(180, 220, 255),
+        GameImage = "rbxassetid://0",
+        Url = "https://raw.githubusercontent.com/SweetBloxy/SweetHub/main/SweetHubWallhop",
+        Enabled = true
+    },
+    {
+        Name = "🎯 • Rivals",
+        Description = "Rivals script",
+        Accent = Color3.fromRGB(255, 120, 120),
+        GameImage = "rbxassetid://0",
+        Url = "https://raw.githubusercontent.com/SweetBloxy/SweetHub/main/SweetHubRivals",
+        Enabled = true
+    },
+    {
+        Name = "🪽 • Fly",
+        Description = "Fly utility",
+        Accent = Color3.fromRGB(190, 160, 255),
+        GameImage = "rbxassetid://0",
+        Url = "https://raw.githubusercontent.com/SweetBloxy/SweetHub/main/SweethubFly",
+        Enabled = true
+    }
+}
+
+--// Helpers
+local function Create(Class, Props, Parent)
+    local Object = Instance.new(Class)
+
+    for Property, Value in pairs(Props) do
+        Object[Property] = Value
+    end
+
+    Object.Parent = Parent
+    return Object
+end
+
+local function Corner(Object, Radius)
+    Create("UICorner", {
+        CornerRadius = UDim.new(0, Radius)
+    }, Object)
+end
+
+local function Stroke(Object, Color, Transparency)
+    return Create("UIStroke", {
+        Color = Color,
+        Transparency = Transparency or 0,
+        Thickness = 1
+    }, Object)
+end
+
+local function Tween(Object, Time, Properties)
+    local Animation = TweenService:Create(
+        Object,
+        TweenInfo.new(Time, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+        Properties
+    )
+
+    Animation:Play()
+    return Animation
+end
+
+--// Screen
+local Screen = Create("ScreenGui", {
+    Name = "SweetHubSelector",
+    ResetOnSpawn = false,
+    IgnoreGuiInset = true,
+    ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+}, PlayerGui)
+
+--// Main
+local Main = Create("Frame", {
+    Size = UDim2.fromOffset(400, 360),
+    Position = UDim2.new(0.5, -200, 0.5, -180),
+    BackgroundColor3 = Theme.Background,
+    BorderSizePixel = 0,
+    ClipsDescendants = true
+}, Screen)
+
+Corner(Main, 18)
+Stroke(Main, Theme.Purple, 0.2)
+
+local MainScale = Create("UIScale", {
+    Scale = 1
+}, Main)
+
+--// Background
+Create("ImageLabel", {
+    Size = UDim2.fromScale(1, 1),
+    BackgroundTransparency = 1,
+    Image = "rbxthumb://type=Asset&id=84560327083102&w=420&h=420",
+    ImageTransparency = 0.25,
+    ScaleType = Enum.ScaleType.Crop,
+    ZIndex = 1
+}, Main)
+
+local Glass = Create("Frame", {
+    Size = UDim2.fromScale(1, 1),
+    BackgroundColor3 = Theme.Background,
+    BackgroundTransparency = 0.4,
+    BorderSizePixel = 0,
+    ZIndex = 2
+}, Main)
+
+Corner(Glass, 18)
+
+--// Header
+local Header = Create("Frame", {
+    Size = UDim2.new(1, 0, 0, 75),
+    BackgroundTransparency = 1,
+    ZIndex = 3
+}, Main)
+
+Create("TextLabel", {
+    Position = UDim2.fromOffset(17, 12),
+    Size = UDim2.new(1, -60, 0, 28),
+    BackgroundTransparency = 1,
+    Font = Enum.Font.GothamBold,
+    Text = "💫 • Sweet Hub",
+    TextColor3 = Theme.Text,
+    TextSize = 21,
+    TextXAlignment = Enum.TextXAlignment.Left
+}, Header)
+
+local Subtitle = Create("TextLabel", {
+    Position = UDim2.fromOffset(19, 41),
+    Size = UDim2.new(1, -30, 0, 18),
+    BackgroundTransparency = 1,
+    Font = Enum.Font.Gotham,
+    Text = "SELECT YOUR EXPERIENCE",
+    TextColor3 = Theme.SubText,
+    TextSize = 10,
+    TextXAlignment = Enum.TextXAlignment.Left
+}, Header)
+
+local Close = Create("TextButton", {
+    Position = UDim2.new(1, -43, 0, 13),
+    Size = UDim2.fromOffset(30, 30),
+    BackgroundColor3 = Theme.Surface2,
+    BorderSizePixel = 0,
+    Text = "×",
+    Font = Enum.Font.GothamBold,
+    TextSize = 21,
+    TextColor3 = Theme.Text,
+    AutoButtonColor = false
+}, Header)
+
+Corner(Close, 9)
+
+Create("Frame", {
+    Position = UDim2.fromOffset(15, 74),
+    Size = UDim2.new(1, -30, 0, 1),
+    BackgroundColor3 = Theme.Purple,
+    BackgroundTransparency = 0.35,
+    BorderSizePixel = 0
+}, Main)
+
+--// Script Grid
+local Grid = Create("ScrollingFrame", {
+    Position = UDim2.fromOffset(14, 88),
+    Size = UDim2.new(1, -28, 1, -101),
+    BackgroundTransparency = 1,
+    BorderSizePixel = 0,
+    ScrollBarThickness = 3,
+    ScrollBarImageColor3 = Theme.Purple,
+    AutomaticCanvasSize = Enum.AutomaticSize.Y,
+    CanvasSize = UDim2.new()
+}, Main)
+
+Create("UIGridLayout", {
+    CellSize = UDim2.new(0.5, -5, 0, 70),
+    CellPadding = UDim2.fromOffset(8, 8),
+    SortOrder = Enum.SortOrder.LayoutOrder
+}, Grid)
+
+--// Preview Overlay
+local Overlay = Create("Frame", {
+    Size = UDim2.fromScale(1, 1),
+    BackgroundColor3 = Color3.new(0, 0, 0),
+    BackgroundTransparency = 0.35,
+    Visible = false,
+    ZIndex = 10
+}, Main)
+
+local Preview = Create("Frame", {
+    AnchorPoint = Vector2.new(0.5, 0.5),
+    Position = UDim2.fromScale(0.5, 0.5),
+    Size = UDim2.fromOffset(300, 260),
+    BackgroundColor3 = Theme.Background,
+    BorderSizePixel = 0,
+    ZIndex = 11
+}, Overlay)
+
+Corner(Preview, 18)
+Stroke(Preview, Theme.Purple, 0)
+
+local PreviewScale = Create("UIScale", {
+    Scale = 0.75
+}, Preview)
+
+local GameImage = Create("ImageLabel", {
+    Position = UDim2.fromOffset(10, 10),
+    Size = UDim2.new(1, -20, 0, 140),
+    BackgroundColor3 = Theme.Surface2,
+    BorderSizePixel = 0,
+    Image = "",
+    ScaleType = Enum.ScaleType.Crop,
+    ZIndex = 12
+}, Preview)
+
+Corner(GameImage, 12)
+
+local PreviewName = Create("TextLabel", {
+    Position = UDim2.fromOffset(15, 158),
+    Size = UDim2.new(1, -30, 0, 25),
+    BackgroundTransparency = 1,
+    Font = Enum.Font.GothamBold,
+    Text = "MM2",
+    TextColor3 = Theme.Text,
+    TextSize = 17,
+    TextXAlignment = Enum.TextXAlignment.Left,
+    ZIndex = 12
+}, Preview)
+
+local PreviewDescription = Create("TextLabel", {
+    Position = UDim2.fromOffset(15, 184),
+    Size = UDim2.new(1, -30, 0, 18),
+    BackgroundTransparency = 1,
+    Font = Enum.Font.Gotham,
+    Text = "Murder Mystery 2",
+    TextColor3 = Theme.SubText,
+    TextSize = 11,
+    TextXAlignment = Enum.TextXAlignment.Left,
+    ZIndex = 12
+}, Preview)
+
+local Execute = Create("TextButton", {
+    Position = UDim2.fromOffset(15, 215),
+    Size = UDim2.new(1, -65, 0, 32),
+    BackgroundColor3 = Theme.Purple,
+    BorderSizePixel = 0,
+    Font = Enum.Font.GothamBold,
+    Text = "EXECUTE",
+    TextColor3 = Color3.new(1, 1, 1),
+    TextSize = 12,
+    AutoButtonColor = false,
+    ZIndex = 12
+}, Preview)
+
+Corner(Execute, 9)
+
+local PreviewClose = Create("TextButton", {
+    Position = UDim2.new(1, -45, 0, 215),
+    Size = UDim2.fromOffset(30, 32),
+    BackgroundColor3 = Theme.Surface2,
+    BorderSizePixel = 0,
+    Font = Enum.Font.GothamBold,
+    Text = "×",
+    TextColor3 = Theme.Text,
+    TextSize = 19,
+    AutoButtonColor = false,
+    ZIndex = 12
+}, Preview)
+
+Corner(PreviewClose, 9)
+
+--// Preview State
+local SelectedScript = nil
+
+local function ClosePreview()
+    Tween(PreviewScale, 0.18, {Scale = 0.75})
+    Tween(Overlay, 0.18, {BackgroundTransparency = 1})
+
+    task.delay(0.19, function()
+        Overlay.Visible = false
+    end)
+end
+
+local function OpenPreview(Data)
+    SelectedScript = Data
+
+    PreviewName.Text = Data.Name
+    PreviewDescription.Text = Data.Description
+    GameImage.Image = Data.GameImage
+
+    Execute.Text = Data.Enabled and "EXECUTE" or "UNAVAILABLE"
+
+    Execute.BackgroundColor3 = Data.Enabled
+        and Theme.Purple
+        or Theme.Surface2
+
+    Overlay.Visible = true
+    Overlay.BackgroundTransparency = 1
+    PreviewScale.Scale = 0.75
+
+    Tween(Overlay, 0.2, {
+        BackgroundTransparency = 0.35
+    })
+
+    Tween(PreviewScale, 0.3, {
+        Scale = 1
+    })
+end
+
+PreviewClose.Activated:Connect(ClosePreview)
+
+--// URL Execution Handler
+Execute.Activated:Connect(function()
+    if not SelectedScript then
+        return
+    end
+
+    if not SelectedScript.Enabled then
+        PreviewDescription.Text = "This script is not available yet."
+        return
+    end
+
+    --// URL is stored in SelectedScript.Url.
+    --// Connect reviewed, compatible local functionality here.
+    PreviewDescription.Text = "Selected URL: " .. SelectedScript.Url
+end)
+
+--// Cards
+for Index, Data in ipairs(Scripts) do
+    local Card = Create("TextButton", {
+        Name = "Card_" .. Index,
+        LayoutOrder = Index,
+        BackgroundColor3 = Theme.Surface,
+        BackgroundTransparency = 0.12,
+        BorderSizePixel = 0,
+        Text = "",
+        AutoButtonColor = false,
+        ZIndex = 4
+    }, Grid)
+
+    Corner(Card, 12)
+
+    local CardStroke = Stroke(Card, Data.Accent, 0.45)
+
+    local Accent = Create("Frame", {
+        Position = UDim2.fromOffset(0, 12),
+        Size = UDim2.fromOffset(3, 46),
+        BackgroundColor3 = Data.Accent,
+        BorderSizePixel = 0,
+        ZIndex = 5
+    }, Card)
+
+    Corner(Accent, 3)
+
+    Create("TextLabel", {
+        Position = UDim2.fromOffset(11, 13),
+        Size = UDim2.new(1, -18, 0, 23),
+        BackgroundTransparency = 1,
+        Font = Enum.Font.GothamBold,
+        Text = Data.Name,
+        TextColor3 = Theme.Text,
+        TextSize = 12,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextTruncate = Enum.TextTruncate.AtEnd,
+        ZIndex = 5
+    }, Card)
+
+    Create("TextLabel", {
+        Position = UDim2.fromOffset(11, 37),
+        Size = UDim2.new(1, -18, 0, 19),
+        BackgroundTransparency = 1,
+        Font = Enum.Font.Gotham,
+        Text = Data.Description,
+        TextColor3 = Theme.SubText,
+        TextSize = 10,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextTruncate = Enum.TextTruncate.AtEnd,
+        ZIndex = 5
+    }, Card)
+
+    Card.MouseEnter:Connect(function()
+        Tween(Card, 0.18, {
+            BackgroundColor3 = Theme.Surface2,
+            BackgroundTransparency = 0
+        })
+
+        Tween(CardStroke, 0.18, {
+            Transparency = 0
+        })
+
+        Tween(Accent, 0.18, {
+            Size = UDim2.fromOffset(4, 46)
+        })
+    end)
+
+    Card.MouseLeave:Connect(function()
+        Tween(Card, 0.18, {
+            BackgroundColor3 = Theme.Surface,
+            BackgroundTransparency = 0.12
+        })
+
+        Tween(CardStroke, 0.18, {
+            Transparency = 0.45
+        })
+
+        Tween(Accent, 0.18, {
+            Size = UDim2.fromOffset(3, 46)
+        })
+    end)
+
+    Card.Activated:Connect(function()
+        Tween(Card, 0.1, {
+            BackgroundColor3 = Theme.Purple
+        })
+
+        task.delay(0.1, function()
+            if Card.Parent then
+                OpenPreview(Data)
+            end
+        end)
+    end)
+end
+
+--// Dragging
+local Dragging = false
+local DragStart
+local StartPosition
+
+Header.InputBegan:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.MouseButton1
+        or Input.UserInputType == Enum.UserInputType.Touch then
+
+        Dragging = true
+        DragStart = Input.Position
+        StartPosition = Main.Position
+
+        Input.Changed:Connect(function()
+            if Input.UserInputState == Enum.UserInputState.End then
+                Dragging = false
+            end
+        end)
+    end
+end)
+
+UIS.InputChanged:Connect(function(Input)
+    if Dragging and (
+        Input.UserInputType == Enum.UserInputType.MouseMovement
+        or Input.UserInputType == Enum.UserInputType.Touch
+    ) then
+
+        local Delta = Input.Position - DragStart
+
+        Main.Position = UDim2.new(
+            StartPosition.X.Scale,
+            StartPosition.X.Offset + Delta.X,
+            StartPosition.Y.Scale,
+            StartPosition.Y.Offset + Delta.Y
+        )
+    end
+end)
+
+--// Close Main
+Close.Activated:Connect(function()
+    Tween(MainScale, 0.25, {Scale = 0})
+    task.wait(0.26)
+    Screen:Destroy()
+end)
+
+--// Opening Animation
+MainScale.Scale = 0.75
+Tween(MainScale, 0.45, {Scale = 1})
